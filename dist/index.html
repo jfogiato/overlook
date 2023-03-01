@@ -13,7 +13,7 @@
   <header>
     <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo">
     <h1>Welcome, <span id="userName">Name</span>!</h1>
-    <h2>You've spent <span id="totalSpent">$0000</span> with us and have accrued <span id="totalRewards">0000</span> rewards points!</h2>
+    <h2>You've spent $<span id="totalSpent">0000</span> with us and have accrued <span id="totalRewards">0000</span> reward points!</h2>
   </header>
   <main>
     <section class="modal-section hidden" id="modalSection">
@@ -33,7 +33,7 @@
       <form class="date-selection">
         <label for="reservationDate">Make a new reservation:</label>
         <input type="date" id="reservationDate" name="reservation-date">
-        <button id="searchButton">Search!</button>
+        <button type="submit" id="searchButton">Search!</button>
       </form>
       <section class="room-options">
         <form class="filter-form">

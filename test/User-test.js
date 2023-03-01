@@ -63,12 +63,4 @@ describe('User', () => {
     user.calculateTotalSpent(rooms);
     expect(user.totalRewards).to.equal(440);
   });
-
-  it('Should', () => {
-    expect();
-  });
-
-  it('Should', () => {
-    expect();
-  });
 });
