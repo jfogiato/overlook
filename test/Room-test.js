@@ -8,7 +8,7 @@ describe('Room', function() {
   let room;
 
   beforeEach( () => {
-    room = new Room(testData.rooms[0])
+    room = new Room(testData.rooms[0]);
   });
 
   it('Should be an instance of Room', () => {
