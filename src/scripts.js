@@ -7,6 +7,7 @@ import Booking from './classes/Booking';
 import Room from './classes/Room';
 import apiRequest from './api-calls';
 import testData from '../test/test-data';
+import BookingRepository from './classes/BookingRepository';
 
 // DOM VARIABLES 🖥️
 const userName = document.getElementById('userName');
@@ -22,22 +23,20 @@ const searchButton = document.getElementById('searchButton');
 const filter = document.getElementById('filters');
 
 // GLOBAL VARIABLES 🌍
-let currentUser = new User({"id": 1, "name": "Leatha Ullrich"})
-let bookings = testData.bookings.map(date => new Booking(date)); // ALL bookings currently in test file - prune when done
-let rooms = testData.rooms; // ALL rooms - delete when API successful
-
+let currentUser = new User({"id": 1, "name": "Leatha Ullrich"});
+let bookingRepo = new BookingRepository(testData.bookings, testData.rooms);
 
 // EVENT LISTENERS 👂
 window.addEventListener('load', () => {
-  currentUser.getBookings(bookings);
-  currentUser.calculateTotalSpent(rooms);
+  currentUser.getBookings(bookingRepo.bookings);
+  currentUser.calculateTotalSpent(bookingRepo.rooms);
   updateUserName(currentUser);
   updateUserSpent(currentUser);
 });
 
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  getAvailableRooms(reservationDate.value.replace(/-/g, "/"));
+  console.log('scripts: ', bookingRepo.getAvailableRooms(reservationDate.value.replace(/-/g, "/")));
   console.log(reservationDate.value);
 })
 
@@ -48,10 +47,6 @@ searchButton.addEventListener('click', (event) => {
 
 
 // FUNCTIONS ⚙️
-function getAvailableRooms(date) {
-  const unavailableRooms = bookings.filter(booking => booking.date === date);
-  
-}
 
 function updateUserName(user) {
   userName.innerText = user.name;
