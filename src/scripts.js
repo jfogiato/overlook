@@ -5,6 +5,7 @@ import './images/hotel-room.png';
 import User from './classes/User';
 import Booking from './classes/Booking';
 import Room from './classes/Room';
+import apiRequest from './api-calls';
 
 // DOM VARIABLES 🖥️
 const userName = document.getElementById('userName');
