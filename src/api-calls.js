@@ -1,7 +1,7 @@
-const apiRequest = (request, path, userID, date, roomNumber) => {
+function apiRequest(request, path, userID, date, roomNumber) {
   fetch(`http://localhost:3001/api/v1/${path}`, {
     method: request,
-    body: JSON.stringify({ "userID": userID, "date": date, "roomNumber": roomNumber }),
+    body: userID ? JSON.stringify({ "userID": userID, "date": date, "roomNumber": roomNumber }) : null,
     headers: {
       "Content-Type": "application/json"
     }

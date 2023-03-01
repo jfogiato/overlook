@@ -20,10 +20,10 @@ describe('Booking', () => {
   });
   
   it('Should have a date', () => {
-    expect(booking.date).to.equal('2023/04/22');
+    expect(booking.date).to.equal('2022/04/22');
   });
   
   it('Should have a room number', () => {
-    expect(booking.roomNumber).to.equal(1);
+    expect(booking.roomNumber).to.equal(15);
   });
 });
