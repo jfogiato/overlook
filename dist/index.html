@@ -4,13 +4,172 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+  <title>Grand Budapest Hotel</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
-  <script src="bundle.js"></script>
+  <header>
+    <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo">
+    <h1>Welcome, <span id="userName">Name</span>!</h1>
+    <h2>You've spent <span id="totalSpent">$0000</span> with us and have accrued <span id="totalRewards">0000</span> rewards points!</h2>
+  </header>
+  <main>
+    <section class="modal-section hidden" id="modalSection">
+      <!-- Room Modal inserted here -->
+      <section class="modal" id="modal">
+        <h3>Residential Suite</h3>
+        <img src="./images/hotel-room.png" alt="Hotel Room">
+        <div class="modal-room-info" id="modalRoomInfo">
+          <p>4 People</p>
+          <p>2 Queen Beds</p>
+          <p>Bidet</p>
+        </div>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+      </section>
+    </section>
+    <aside class="left-side-create">
+      <form class="date-selection">
+        <label for="reservationDate">Make a new reservation:</label>
+        <input type="date" id="reservationDate" name="reservation-date">
+        <button id="searchButton">Search!</button>
+      </form>
+      <section class="room-options">
+        <form class="filter-form">
+          <label for="filters">Filter Rooms</label>
+          <select name="filter-rooms" id="filters">
+              <!-- <option id="filterPlaceholder" value="" disabled selected></option> -->
+              <option value="Residential Suite">Residential Suite</option>
+              <option value="Suite">Suite</option>
+              <option value="Junior Suite">Junior Suite</option>
+              <option value="Single Room">Single Room</option>
+          </select>
+        </form>
+        <section class="mini-room-cards">
+          <div class="mini-room" id="1">
+            <!-- <div class="mini-room-left">
+              <h3>Residential Suite</h3>
+              <p>1 Queen Bed</p>
+            </div>
+            <h3>$300/night</h3>
+          </div>
+          <div class="mini-room" id="1">
+            <div class="mini-room-left">
+              <h3>Residential Suite</h3>
+              <p>1 Queen Bed</p>
+            </div>
+            <h3>$300/night</h3>
+          </div>
+          <div class="mini-room" id="1">
+            <div class="mini-room-left">
+              <h3>Residential Suite</h3>
+              <p>1 Queen Bed</p>
+            </div>
+            <h3>$300/night</h3>
+          </div>
+          <div class="mini-room" id="1">
+            <div class="mini-room-left">
+              <h3>Residential Suite</h3>
+              <p>1 Queen Bed</p>
+            </div>
+            <h3>$300/night</h3>
+          </div>
+          <div class="mini-room" id="1">
+            <div class="mini-room-left">
+              <h3>Residential Suite</h3>
+              <p>1 Queen Bed</p>
+            </div>
+            <h3>$300/night</h3>
+          </div>
+          <div class="mini-room" id="1">
+            <div class="mini-room-left">
+              <h3>Residential Suite</h3>
+              <p>1 Queen Bed</p>
+            </div>
+            <h3>$300/night</h3>
+          </div> -->
+        </section>
+      </section>
+    </aside>
+    <aside class="right-side-booked">
+      <h2>Your upcoming reservations:</h2>
+      <section class="upcoming-reservations">
+        <section class="upcoming-minis">
+          <!-- <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div> -->
+        </section>
+      </section>
+      <h2>Your past reservations:</h2>
+      <section class="past-reservations">
+        <section class="past-minis">
+          <!-- <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div>
+          <div class="mini-room-booked" id="1">
+            <h3>Residential Suite</h3>
+            <h3>March 25th, 2023</h3>
+          </div> -->
+      </section>
+    </aside>
+  </main>
 
+
+  <script src="bundle.js"></script>
 </body>
 </html>
