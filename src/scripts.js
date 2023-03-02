@@ -62,15 +62,18 @@ function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
 
   modalSection.innerHTML = "";
+  let bed = room.numBeds > 1 ? 'beds' : 'bed';
+  let multiplier = room.bedSize === 'twin' ? 1 : 2;
+  let bidet = room.bidet ? 'Bidet' : '';
 
   modalSection.innerHTML = `
     <section class="modal" id="modal">
-      <h3>Residential Suite</h3>
+      <h3>${room.roomType}</h3>
       <img src="./images/hotel-room.png" alt="Hotel Room">
       <div class="modal-room-info" id="modalRoomInfo">
-        <p>4 People</p>
-        <p>2 Queen Beds</p>
-        <p>Bidet</p>
+        <p>${room.numBeds * multiplier} People</p>
+        <p>${room.numBeds} ${room.bedSize} ${bed}</p>
+        <p>${bidet}</p>
       </div>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
     </section>
