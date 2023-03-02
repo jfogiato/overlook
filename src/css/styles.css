@@ -140,6 +140,10 @@ main {
   flex-direction: column;
 }
 
+.mini-room-left > p, h3 {
+  text-transform: capitalize;
+}
+
 .right-side-booked > h2 {
   text-align: center;
 } 

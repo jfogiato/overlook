@@ -32,13 +32,14 @@ window.addEventListener('load', () => {
   currentUser.calculateTotalSpent(bookingRepo.rooms);
   updateUserName(currentUser);
   updateUserSpent(currentUser);
+  generateReservations(currentUser.bookings);
 });
 
 searchButton.addEventListener('click', (event) => {
   event.preventDefault();
-  console.log('scripts: ', bookingRepo.getAvailableRooms(reservationDate.value.replace(/-/g, "/")));
-  console.log(reservationDate.value);
-})
+  let availableRooms = bookingRepo.getAvailableRooms(reservationDate.value.replace(/-/g, "/"));
+  generateAvailableRooms(availableRooms);
+});
 
 
 // apiRequest('GET', 'customers/1').then(data => currentUser = new User(data));
@@ -47,6 +48,31 @@ searchButton.addEventListener('click', (event) => {
 
 
 // FUNCTIONS ⚙️
+function generateAvailableRooms(rooms) {
+  miniRoomCards.innerHTML = "";
+
+  rooms.forEach(room => {
+    let bed = room.numBeds > 1 ? 'beds' : 'bed';
+
+    miniRoomCards.innerHTML += `
+    <div class="mini-room" id="${room.number}">
+      <div class="mini-room-left">
+        <h3>${room.roomType}</h3>
+        <p>${room.numBeds} ${room.bedSize} ${bed}</p>
+      </div>
+      <h3>$${room.costPerNight}/night</h3>
+    </div>
+    `;
+  });
+}
+
+function generateReservations(bookings) {
+  // let today = (new Date(Date.now()).toISOString()).substring(0, 10).replace(/-/g, "/");
+  let today = Date.now();
+
+  let futureBookings = bookings
+
+}
 
 function updateUserName(user) {
   userName.innerText = user.name;

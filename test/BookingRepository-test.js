@@ -215,8 +215,4 @@ describe('Booking Repository', () => {
     expect(bookingRepo.getAvailableRooms('2022/04/22')).to.deep.equal(availableRooms);
   });
 
-  it('Should', () => {
-
-  });
-
 });
