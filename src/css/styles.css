@@ -63,13 +63,19 @@ main {
 .modal {
   height: 70vmin;
   width: 80vmin;
-  border: 2px white solid;
-  border-radius: 5px;
   background-color: #E1E1E1;
   margin-top: 3vmin;
   overflow: auto;
   padding: 3vmin;
   padding-right: 5vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal > p {
+  margin: 2vh 0 2vh 0;
+  text-align: center;
 }
 
 .modal > img {
@@ -78,10 +84,15 @@ main {
 
 .modal > h3 {
   text-align: center;
+  height: auto;
+  margin-bottom: 2vh;
 }
 
 .modal-room-info {
   display: flex;
+  margin-top: 2vh;
+  text-transform: capitalize;
+  width: 100%;
   justify-content: space-evenly;
 }
 
@@ -113,6 +124,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .mini-room-cards {
@@ -135,9 +147,22 @@ main {
   margin: 1vh;
 }
 
-.mini-room-left {
+.mini-room-left, .mini-room-right {
   display: flex;
   flex-direction: column;
+  width: 50%;
+  height: 100%;
+}
+
+.mini-room-right > h3 {
+  width: 100%;
+  height: 100%;
+  text-align: right;
+}
+
+.mini-room-left > p, h3 {
+  text-transform: capitalize;
+  height: 50%;
 }
 
 .right-side-booked > h2 {
@@ -165,7 +190,7 @@ main {
 .mini-room-booked {
   display: flex;
   width: 80%;
-  height: 100vh;
+  /* height: 100vh; */
   margin: 0.5vh;
   justify-content: space-evenly;
 }

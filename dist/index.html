@@ -11,160 +11,48 @@
 </head>
 <body>
   <header>
-    <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo">
-    <h1>Welcome, <span id="userName">Name</span>!</h1>
-    <h2>You've spent <span id="totalSpent">$0000</span> with us and have accrued <span id="totalRewards">0000</span> rewards points!</h2>
+    <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
+    <h1 tabindex="0">Welcome, <span id="userName">Name</span>!</h1>
+    <h2 tabindex="0">You've spent $<span id="totalSpent">0000</span> with us and have accrued <span id="totalRewards">0000</span> reward points!</h2>
   </header>
   <main>
     <section class="modal-section hidden" id="modalSection">
       <!-- Room Modal inserted here -->
-      <section class="modal" id="modal">
-        <h3>Residential Suite</h3>
-        <img src="./images/hotel-room.png" alt="Hotel Room">
-        <div class="modal-room-info" id="modalRoomInfo">
-          <p>4 People</p>
-          <p>2 Queen Beds</p>
-          <p>Bidet</p>
-        </div>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
-      </section>
     </section>
     <aside class="left-side-create">
       <form class="date-selection">
-        <label for="reservationDate">Make a new reservation:</label>
-        <input type="date" id="reservationDate" name="reservation-date">
-        <button id="searchButton">Search!</button>
+        <label for="reservationDate" tabindex="0">Make a new reservation:</label>
+        <input type="date" id="reservationDate" name="reservation-date" tabindex="0">
+        <button type="submit" id="searchButton" tabindex="0">Search!</button>
       </form>
       <section class="room-options">
         <form class="filter-form">
-          <label for="filters">Filter Rooms</label>
-          <select name="filter-rooms" id="filters">
-              <!-- <option id="filterPlaceholder" value="" disabled selected></option> -->
-              <option value="Residential Suite">Residential Suite</option>
-              <option value="Suite">Suite</option>
-              <option value="Junior Suite">Junior Suite</option>
-              <option value="Single Room">Single Room</option>
+          <label for="filters" tabindex="0">Filter Rooms</label>
+          <select name="filter-rooms" id="filters" tabindex="0">
+            <option id="filterPlaceholder" value="" disabled selected>Select a room type!</option>
+            <option value="Residential Suite">Residential Suite</option>
+            <option value="Suite">Suite</option>
+            <option value="Junior Suite">Junior Suite</option>
+            <option value="Single Room">Single Room</option>
           </select>
         </form>
-        <section class="mini-room-cards">
-          <div class="mini-room" id="1">
-            <!-- <div class="mini-room-left">
-              <h3>Residential Suite</h3>
-              <p>1 Queen Bed</p>
-            </div>
-            <h3>$300/night</h3>
-          </div>
-          <div class="mini-room" id="1">
-            <div class="mini-room-left">
-              <h3>Residential Suite</h3>
-              <p>1 Queen Bed</p>
-            </div>
-            <h3>$300/night</h3>
-          </div>
-          <div class="mini-room" id="1">
-            <div class="mini-room-left">
-              <h3>Residential Suite</h3>
-              <p>1 Queen Bed</p>
-            </div>
-            <h3>$300/night</h3>
-          </div>
-          <div class="mini-room" id="1">
-            <div class="mini-room-left">
-              <h3>Residential Suite</h3>
-              <p>1 Queen Bed</p>
-            </div>
-            <h3>$300/night</h3>
-          </div>
-          <div class="mini-room" id="1">
-            <div class="mini-room-left">
-              <h3>Residential Suite</h3>
-              <p>1 Queen Bed</p>
-            </div>
-            <h3>$300/night</h3>
-          </div>
-          <div class="mini-room" id="1">
-            <div class="mini-room-left">
-              <h3>Residential Suite</h3>
-              <p>1 Queen Bed</p>
-            </div>
-            <h3>$300/night</h3>
-          </div> -->
+        <section class="mini-room-cards" id="miniRoomCards">
+          <!-- Available rooms go here! -->
         </section>
       </section>
     </aside>
     <aside class="right-side-booked">
       <h2>Your upcoming reservations:</h2>
       <section class="upcoming-reservations">
-        <section class="upcoming-minis">
-          <!-- <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div> -->
+        <section class="upcoming-minis" id="upcomingMinis">
+         <!-- Future reservations go here! -->
         </section>
       </section>
       <h2>Your past reservations:</h2>
       <section class="past-reservations">
-        <section class="past-minis">
-          <!-- <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div>
-          <div class="mini-room-booked" id="1">
-            <h3>Residential Suite</h3>
-            <h3>March 25th, 2023</h3>
-          </div> -->
+        <section class="past-minis" id="pastMinis">
+         <!-- Past reservations go here! -->
+        </section>
       </section>
     </aside>
   </main>
