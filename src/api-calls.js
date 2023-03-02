@@ -1,5 +1,5 @@
 function apiRequest(request, path, userID, date, roomNumber) {
-  fetch(`http://localhost:3001/api/v1/${path}`, {
+  return fetch(`http://localhost:3001/api/v1/${path}`, {
     method: request,
     body: userID ? JSON.stringify({ "userID": userID, "date": date, "roomNumber": roomNumber }) : null,
     headers: {
@@ -13,7 +13,18 @@ function apiRequest(request, path, userID, date, roomNumber) {
       throw new Error(response.status);
     }
   })
+  .then(data => {
+    return data
+  })
   .catch(err => console.log(err));
 }
 
-export default apiRequest;
+const getAllData = () => {
+  return Promise.all([
+    apiRequest('GET', 'customers/1'),
+    apiRequest('GET', 'rooms'),
+    apiRequest('GET', 'bookings')
+  ])
+}
+
+export default { apiRequest, getAllData };

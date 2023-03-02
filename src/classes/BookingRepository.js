@@ -26,6 +26,25 @@ class BookingRepository {
     return this.availableRooms;
   }
 
+  addBooking(room, date, user) {
+    let bookingObject = {
+      id: Date.now(),
+      userID: user,
+      date: date,
+      roomNumber: room
+    };
+
+    let newBooking = new Booking(bookingObject);
+
+    this.bookings.push(newBooking);
+
+    this.availableRooms.forEach((availRoom, index) => {
+      if (availRoom.number === room) {
+        this.availableRooms.splice(index, 1);
+      }
+    });
+  }
+
 }
 
 export default BookingRepository;

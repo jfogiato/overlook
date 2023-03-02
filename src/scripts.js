@@ -5,7 +5,7 @@ import './images/hotel-room.png';
 import User from './classes/User';
 import Booking from './classes/Booking';
 import Room from './classes/Room';
-import apiRequest from './api-calls';
+import apiObject from './api-calls';
 import testData from '../test/test-data';
 import BookingRepository from './classes/BookingRepository';
 
@@ -20,6 +20,7 @@ const pastMinis = document.getElementById('pastMinis');
 const reservationDate = document.getElementById('reservationDate');
 
 const searchButton = document.getElementById('searchButton');
+const searchDate = document.getElementById('reservationDate');
 const filter = document.getElementById('filters');
 
 // GLOBAL VARIABLES 🌍
@@ -31,6 +32,18 @@ const roomDescriptions = {
   "junior suite": "Like the suite, but more junior",
   "single room": "meh"
 }
+
+// API CALLS 📲
+
+apiObject.getAllData()
+  .then(data => {
+    console.log(data)   
+  })
+
+
+// apiRequest('GET', 'customers/1').then(data => currentUser = new User(data));
+// apiRequest('GET', 'rooms').then(data => rooms = data.map(room => new Room(room)));
+// apiRequest('GET', 'bookings').then(data => bookings = data.map(booking => new Booking(booking)));
 
 // EVENT LISTENERS 👂
 window.addEventListener('load', () => {
@@ -47,7 +60,8 @@ searchButton.addEventListener('click', (e) => {
   generateAvailableRooms(availableRooms);
 });
 
-filter.addEventListener('change', () => {
+filter.addEventListener('change', (e) => {
+  e.preventDefault();
   filterAvailableRooms(filter.value, bookingRepo.availableRooms)
 });
 
@@ -62,12 +76,13 @@ modalSection.addEventListener('click', (e) => {
 });
 
 
-// apiRequest('GET', 'customers/1').then(data => currentUser = new User(data));
-// apiRequest('GET', 'rooms').then(data => rooms = data.map(room => new Room(room)));
-// apiRequest('GET', 'bookings').then(data => bookings = data.map(booking => new Booking(booking)));
-
-
 // FUNCTIONS ⚙️
+function bookRoom(room) {
+  let date = searchDate.vale.replace(/-/g, "/");
+  bookingRepo.addBooking(room, date, currentUser.id);
+  generateReservations(currentUser.bookings)
+}
+
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
 
@@ -86,8 +101,12 @@ function generateModal(roomList, roomNumber) {
         <p>${bidet}</p>
       </div>
       <p>${roomDescriptions[room.roomType]}</p>
+      <button id="bookButton">Book it!</button>
     </section>
   `;
+  document.getElementById('bookButton').addEventListener('click', () => {
+    bookRoom(room);
+  });
 }
 
 function filterAvailableRooms(type, rooms) {
