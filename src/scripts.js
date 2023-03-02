@@ -93,14 +93,14 @@ function generateModal(roomList, roomNumber) {
   modalSection.innerHTML = "";
   modalSection.innerHTML = `
     <section class="modal" id="modal">
-      <h3>${room.roomType}</h3>
-      <img src="./images/hotel-room.png" alt="Hotel Room">
+      <h3 tabindex="0">${room.roomType}</h3>
+      <img src="./images/hotel-room.png" alt="Hotel Room" tabindex="0">
       <div class="modal-room-info" id="modalRoomInfo">
-        <p>${room.numBeds * multiplier} People</p>
-        <p>${room.numBeds} ${room.bedSize} ${bed}</p>
-        <p>${bidet}</p>
+        <p tabindex="0">${room.numBeds * multiplier} People</p>
+        <p tabindex="0">${room.numBeds} ${room.bedSize} ${bed}</p>
+        <p tabindex="0">${bidet}</p>
       </div>
-      <p>${roomDescriptions[room.roomType]}</p>
+      <p tabindex="0">${roomDescriptions[room.roomType]}</p>
       <button id="bookButton">Book it!</button>
     </section>
   `;
@@ -125,17 +125,17 @@ function generateAvailableRooms(rooms) {
         miniRoomCards.innerHTML += `
         <div class="mini-room" id="${room.number}">
           <div class="mini-room-left">
-            <h3>${room.roomType}</h3>
-            <p>${room.numBeds} ${room.bedSize} ${bed}</p>
+            <h3 tabindex="0">${room.roomType}</h3>
+            <p tabindex="0">${room.numBeds} ${room.bedSize} ${bed}</p>
           </div>
           <div class="mini-room-right">
-            <h3>$${room.costPerNight}/night</h3>
+            <h3 tabindex="0">$${room.costPerNight}/night</h3>
           </div>
         </div>
         `;
       })
   } else {
-    miniRoomCards.innerHTML = "<div>Oh no!! It looks like we don't have any rooms that match your search. Please try a different search criteria!</div>"
+    miniRoomCards.innerHTML = `<div tabindex="0">Oh no!! It looks like we don't have any rooms that match your search. Please try a different search criteria!</div>`
   }
 }
 
@@ -156,8 +156,8 @@ function generateReservations(bookings) {
   futureReservations.forEach(reservation => {
     upcomingMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.roomNumber}">
-      <h3>Residential Suite</h3>
-      <h3>${reservation.date}</h3>
+      <h3 tabindex="0">Residential Suite</h3>
+      <h3 tabindex="0">${reservation.date}</h3>
     </div>
     `;
   });
@@ -165,8 +165,8 @@ function generateReservations(bookings) {
   pastReservations.forEach(reservation => {
     pastMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.roomNumber}">
-      <h3>Residential Suite</h3>
-      <h3>${reservation.date}</h3>
+      <h3 tabindex="0">Residential Suite</h3>
+      <h3 tabindex="0">${reservation.date}</h3>
     </div>
     `;
   });
