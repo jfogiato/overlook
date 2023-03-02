@@ -14,14 +14,15 @@ function apiRequest(request, path, userID, date, roomNumber) {
     }
   })
   .then(data => {
-    return data
+    console.log(data)
+    return data;
   })
   .catch(err => console.log(err));
 }
 
 const getAllData = () => {
   return Promise.all([
-    apiRequest('GET', 'customers/1'),
+    apiRequest('GET', 'customers'),
     apiRequest('GET', 'rooms'),
     apiRequest('GET', 'bookings')
   ])

@@ -34,7 +34,6 @@ const roomDescriptions = {
 }
 
 // API CALLS 📲
-
 apiObject.getAllData()
   .then(data => {
     console.log(data)   
@@ -78,10 +77,20 @@ modalSection.addEventListener('click', (e) => {
 
 // FUNCTIONS ⚙️
 function bookRoom(room) {
-  let date = searchDate.vale.replace(/-/g, "/");
-  bookingRepo.addBooking(room, date, currentUser.id);
-  generateReservations(currentUser.bookings)
+  let date = searchDate.value.replace(/-/g, "/");
+  
+  apiObject.apiRequest("POST", "bookings", currentUser.id, date, room.number)
+    .then(() => {
+      apiObject.apiRequest("GET", "bookings")
+        .then(response => {
+          bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
+          currentUser.getBookings(bookingRepo.bookings);
+          generateReservations(currentUser.bookings);
+        })
+    })
 }
+
+
 
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
