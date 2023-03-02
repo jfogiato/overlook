@@ -10,12 +10,23 @@
   <title>Grand Budapest Hotel</title>
 </head>
 <body>
-  <header>
+  <section class="login-page" id="loginPage">
+    <img class="login-logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
+    <form class="login-form" id="loginForm">
+      <label for="username"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="username" id ="userName" required>
+      <label for="password"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password"  id ="password" required>
+      <button type="submit" id="loginButton">Login</button>
+      <label>
+    </form>
+  </section>
+  <header class="hidden">
     <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
-    <h1 tabindex="0">Welcome, <span id="userName">Name</span>!</h1>
+    <h1 tabindex="0">Welcome, <span id="userNameDisplay">Name</span>!</h1>
     <h2 tabindex="0">You've spent $<span id="totalSpent">0000</span> with us and have accrued <span id="totalRewards">0000</span> reward points!</h2>
   </header>
-  <main>
+  <main class="hidden">
     <section class="modal-section hidden" id="modalSection">
       <!-- Room Modal inserted here -->
     </section>

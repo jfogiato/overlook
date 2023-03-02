@@ -7,8 +7,11 @@ import Booking from "./classes/Booking";
 import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
-// DOM VARIABLES 🖥️
-const userName = document.getElementById("userName");
+// DOM VARIABLES - ELEMENTS 🖥️ 🌱
+const loginPage = document.getElementById('loginPage');
+const header = document.querySelector('header');
+const main = document.querySelector('main');
+const userNameDisplay = document.getElementById("userNameDisplay");
 const totalSpent = document.getElementById("totalSpent");
 const totalRewards = document.getElementById("totalRewards");
 const modalSection = document.getElementById("modalSection");
@@ -17,6 +20,10 @@ const upcomingMinis = document.getElementById("upcomingMinis");
 const pastMinis = document.getElementById("pastMinis");
 const reservationDate = document.getElementById("reservationDate");
 
+// DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢
+const loginForm = document.getElementById('loginForm');
+const userName = document.getElementById('userName');
+const password = document.getElementById('password');
 const searchButton = document.getElementById("searchButton");
 const searchDate = document.getElementById("reservationDate");
 const filter = document.getElementById("filters");
@@ -25,24 +32,42 @@ const filter = document.getElementById("filters");
 let currentUser;
 let bookingRepo;
 const roomDescriptions = {
-  "residential suite": "Very posh suite with stuff",
-  "suite": "Slightly posh with less stuff",
-  "junior suite": "Like the suite, but more junior",
-  "single room": "meh"
+  "residential suite": "Very posh suite with stuff.",
+  "suite": "Slightly less posh with less stuff.",
+  "junior suite": "Like the regular suite, but more junior.",
+  "single room": "You're broke and single too, huh?"
 }
 
 // EVENT LISTENERS 👂
+loginForm.addEventListener('submit', (e) => {
+  e.preventDefault()
+
+  let userNameAttempt = userName.value;
+  let passwordAttempt = password.value;
+  let userNumber = parseInt(userNameAttempt.match(/\d+/g))
+
+  if (passwordAttempt === 'overlook2021' && userNumber >= 1 && userNumber <= 50) {
+    apiObject.apiRequest("GET", `customers/${userNumber}`)
+      .then(data => {
+        currentUser = new User(data);
+        currentUser.getBookings(bookingRepo.bookings);
+        currentUser.calculateTotalSpent(bookingRepo.rooms);
+        updateuserNameDisplay(currentUser);
+        updateUserSpent(currentUser);
+        generateReservations(currentUser.bookings);
+        hide(loginPage);
+        show(header);
+        show(main);
+      });
+  } else {
+    alert('AHHHHHHHHHHHHHHHHHH')
+  }
+});
+
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
-    console.log(data);
-    currentUser = new User(data[0].customers[0]); // need to adjust this logic to iterate through customers based on login
     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
-    currentUser.getBookings(bookingRepo.bookings);
-    currentUser.calculateTotalSpent(bookingRepo.rooms);
-    updateUserName(currentUser);
-    updateUserSpent(currentUser);
-    generateReservations(currentUser.bookings);
   })
 });
 
@@ -172,8 +197,8 @@ function generateReservations(bookings) {
   });
 }
 
-function updateUserName(user) {
-  userName.innerText = user.name;
+function updateuserNameDisplay(user) {
+  userNameDisplay.innerText = user.name;
 }
 
 function updateUserSpent(user) {
