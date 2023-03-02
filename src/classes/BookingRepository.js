@@ -27,26 +27,6 @@ class BookingRepository {
   }
 
   addBooking(room, date, user) {
-  //   return fetch("http://localhost:3001/api/v1/bookings", {
-  //   method: "POST",
-  //   body: JSON.stringify({ "userID": user, "date": date, "roomNumber": room }),
-  //   headers: {
-  //     "Content-Type": "application/json"
-  //   }
-  // })
-  // .then(response => {
-  //   if (response.ok) {
-  //     return response.json();
-  //   } else {
-  //     throw new Error(response.status);
-  //   }
-  // })
-  // .then(data => {
-  //   this.bookings = data;
-  //   return data;
-  // })
-  // .catch(err => console.log(err));
-  
     let bookingObject = {
       id: Date.now(),
       userID: user,

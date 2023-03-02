@@ -11,7 +11,6 @@ class User {
 
   getBookings(allBookingData) {
     this.bookings = allBookingData.filter(booking => booking.userID === this.id);
-    console.log(this.bookings);
   }
 
   calculateTotalSpent(allRooms) {

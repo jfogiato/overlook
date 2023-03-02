@@ -14,7 +14,6 @@ function apiRequest(request, path, userID, date, roomNumber) {
     }
   })
   .then(data => {
-    console.log(data)
     return data;
   })
   .catch(err => console.log(err));

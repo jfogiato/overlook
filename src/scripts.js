@@ -1,31 +1,29 @@
 // IMPORTS 📥
-import './css/styles.css';
-import './images/hotel-logo.png';
-import './images/hotel-room.png';
-import User from './classes/User';
-import Booking from './classes/Booking';
-import Room from './classes/Room';
-import apiObject from './api-calls';
-import testData from '../test/test-data';
-import BookingRepository from './classes/BookingRepository';
+import "./css/styles.css";
+import "./images/hotel-logo.png";
+import "./images/hotel-room.png";
+import User from "./classes/User";
+import Booking from "./classes/Booking";
+import apiObject from "./api-calls";
+import BookingRepository from "./classes/BookingRepository";
 
 // DOM VARIABLES 🖥️
-const userName = document.getElementById('userName');
-const totalSpent = document.getElementById('totalSpent');
-const totalRewards = document.getElementById('totalRewards');
-const modalSection = document.getElementById('modalSection');
-const miniRoomCards = document.getElementById('miniRoomCards');
-const upcomingMinis = document.getElementById('upcomingMinis');
-const pastMinis = document.getElementById('pastMinis');
-const reservationDate = document.getElementById('reservationDate');
+const userName = document.getElementById("userName");
+const totalSpent = document.getElementById("totalSpent");
+const totalRewards = document.getElementById("totalRewards");
+const modalSection = document.getElementById("modalSection");
+const miniRoomCards = document.getElementById("miniRoomCards");
+const upcomingMinis = document.getElementById("upcomingMinis");
+const pastMinis = document.getElementById("pastMinis");
+const reservationDate = document.getElementById("reservationDate");
 
-const searchButton = document.getElementById('searchButton');
-const searchDate = document.getElementById('reservationDate');
-const filter = document.getElementById('filters');
+const searchButton = document.getElementById("searchButton");
+const searchDate = document.getElementById("reservationDate");
+const filter = document.getElementById("filters");
 
 // GLOBAL VARIABLES 🌍
-let currentUser = new User({"id": 1, "name": "Leatha Ullrich"});
-let bookingRepo = new BookingRepository(testData.bookings, testData.rooms);
+let currentUser;
+let bookingRepo;
 const roomDescriptions = {
   "residential suite": "Very posh suite with stuff",
   "suite": "Slightly posh with less stuff",
@@ -33,52 +31,47 @@ const roomDescriptions = {
   "single room": "meh"
 }
 
-// API CALLS 📲
-apiObject.getAllData()
-  .then(data => {
-    console.log(data)   
-  })
-
-
-// apiRequest('GET', 'customers/1').then(data => currentUser = new User(data));
-// apiRequest('GET', 'rooms').then(data => rooms = data.map(room => new Room(room)));
-// apiRequest('GET', 'bookings').then(data => bookings = data.map(booking => new Booking(booking)));
-
 // EVENT LISTENERS 👂
-window.addEventListener('load', () => {
-  currentUser.getBookings(bookingRepo.bookings);
-  currentUser.calculateTotalSpent(bookingRepo.rooms);
-  updateUserName(currentUser);
-  updateUserSpent(currentUser);
-  generateReservations(currentUser.bookings);
+window.addEventListener("load", () => {
+  apiObject.getAllData()
+  .then(data => {
+    console.log(data);
+    currentUser = new User(data[0].customers[0]); // need to adjust this logic to iterate through customers based on login
+    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
+    currentUser.getBookings(bookingRepo.bookings);
+    currentUser.calculateTotalSpent(bookingRepo.rooms);
+    updateUserName(currentUser);
+    updateUserSpent(currentUser);
+    generateReservations(currentUser.bookings);
+  })
 });
 
-searchButton.addEventListener('click', (e) => {
+searchButton.addEventListener("click", (e) => {
   e.preventDefault();
   let availableRooms = bookingRepo.getAvailableRooms(reservationDate.value.replace(/-/g, "/"));
   generateAvailableRooms(availableRooms);
 });
 
-filter.addEventListener('change', (e) => {
+filter.addEventListener("change", (e) => {
   e.preventDefault();
   filterAvailableRooms(filter.value, bookingRepo.availableRooms)
 });
 
-miniRoomCards.addEventListener('click', (e) => {
+miniRoomCards.addEventListener("click", (e) => {
   let roomNumber = e.target.parentNode.parentNode.id;
   generateModal(bookingRepo.availableRooms, roomNumber);
   show(modalSection);
 });
 
-modalSection.addEventListener('click', (e) => {
-  e.target.id === 'modalSection' ? hide(modalSection) : null;
+modalSection.addEventListener("click", (e) => {
+  e.target.id === "modalSection" ? hide(modalSection) : null;
 });
 
 
 // FUNCTIONS ⚙️
 function bookRoom(room) {
   let date = searchDate.value.replace(/-/g, "/");
-  
+
   apiObject.apiRequest("POST", "bookings", currentUser.id, date, room.number)
     .then(() => {
       apiObject.apiRequest("GET", "bookings")
@@ -90,14 +83,12 @@ function bookRoom(room) {
     })
 }
 
-
-
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
 
-  let bed = room.numBeds > 1 ? 'beds' : 'bed';
-  let multiplier = room.bedSize === 'twin' ? 1 : 2;
-  let bidet = room.bidet ? 'Bidet' : '';
+  let bed = room.numBeds > 1 ? "beds" : "bed";
+  let multiplier = room.bedSize === "twin" ? 1 : 2;
+  let bidet = room.bidet ? "Bidet" : "";
   
   modalSection.innerHTML = "";
   modalSection.innerHTML = `
@@ -113,7 +104,7 @@ function generateModal(roomList, roomNumber) {
       <button id="bookButton">Book it!</button>
     </section>
   `;
-  document.getElementById('bookButton').addEventListener('click', () => {
+  document.getElementById("bookButton").addEventListener("click", () => {
     bookRoom(room);
   });
 }
@@ -124,23 +115,28 @@ function filterAvailableRooms(type, rooms) {
 }
 
 function generateAvailableRooms(rooms) {
+
   miniRoomCards.innerHTML = "";
-
-  rooms.forEach(room => {
-    let bed = room.numBeds > 1 ? 'beds' : 'bed';
-
-    miniRoomCards.innerHTML += `
-    <div class="mini-room" id="${room.number}">
-      <div class="mini-room-left">
-        <h3>${room.roomType}</h3>
-        <p>${room.numBeds} ${room.bedSize} ${bed}</p>
-      </div>
-      <div class="mini-room-right">
-        <h3>$${room.costPerNight}/night</h3>
-      </div>
-    </div>
-    `;
-  });
+  
+  if(rooms.length) {
+    rooms.forEach(room => {
+        let bed = room.numBeds > 1 ? "beds" : "bed";
+  
+        miniRoomCards.innerHTML += `
+        <div class="mini-room" id="${room.number}">
+          <div class="mini-room-left">
+            <h3>${room.roomType}</h3>
+            <p>${room.numBeds} ${room.bedSize} ${bed}</p>
+          </div>
+          <div class="mini-room-right">
+            <h3>$${room.costPerNight}/night</h3>
+          </div>
+        </div>
+        `;
+      })
+  } else {
+    miniRoomCards.innerHTML = "<div>Oh no!! It looks like we don't have any rooms that match your search. Please try a different search criteria!</div>"
+  }
 }
 
 function generateReservations(bookings) {
@@ -186,9 +182,9 @@ function updateUserSpent(user) {
 }
 
 function hide(element) {
-  element.classList.add('hidden');
+  element.classList.add("hidden");
 }
 
 function show(element) {
-  element.classList.remove('hidden');
+  element.classList.remove("hidden");
 }
