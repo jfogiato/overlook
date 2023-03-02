@@ -72,17 +72,24 @@ main {
   padding-right: 5vmin;
 }
 
+.modal > p {
+  margin-top: 2vh;
+  text-align: center;
+}
+
 .modal > img {
   width: 100%;
 }
 
 .modal > h3 {
   text-align: center;
+  height: auto;
 }
 
 .modal-room-info {
   display: flex;
   justify-content: space-evenly;
+  text-transform: capitalize;
 }
 
 .left-side-create, .right-side-booked {

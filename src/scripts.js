@@ -25,6 +25,12 @@ const filter = document.getElementById('filters');
 // GLOBAL VARIABLES 🌍
 let currentUser = new User({"id": 1, "name": "Leatha Ullrich"});
 let bookingRepo = new BookingRepository(testData.bookings, testData.rooms);
+const roomDescriptions = {
+  "residential suite": "Very posh suite with stuff",
+  "suite": "Slightly posh with less stuff",
+  "junior suite": "Like the suite, but more junior",
+  "single room": "meh"
+}
 
 // EVENT LISTENERS 👂
 window.addEventListener('load', () => {
@@ -51,6 +57,10 @@ miniRoomCards.addEventListener('click', (e) => {
   show(modalSection);
 });
 
+modalSection.addEventListener('click', (e) => {
+  e.target.id === 'modalSection' ? hide(modalSection) : null;
+});
+
 
 // apiRequest('GET', 'customers/1').then(data => currentUser = new User(data));
 // apiRequest('GET', 'rooms').then(data => rooms = data.map(room => new Room(room)));
@@ -61,11 +71,11 @@ miniRoomCards.addEventListener('click', (e) => {
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
 
-  modalSection.innerHTML = "";
   let bed = room.numBeds > 1 ? 'beds' : 'bed';
   let multiplier = room.bedSize === 'twin' ? 1 : 2;
   let bidet = room.bidet ? 'Bidet' : '';
-
+  
+  modalSection.innerHTML = "";
   modalSection.innerHTML = `
     <section class="modal" id="modal">
       <h3>${room.roomType}</h3>
@@ -75,7 +85,7 @@ function generateModal(roomList, roomNumber) {
         <p>${room.numBeds} ${room.bedSize} ${bed}</p>
         <p>${bidet}</p>
       </div>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. </p>
+      <p>${roomDescriptions[room.roomType]}</p>
     </section>
   `;
 }
