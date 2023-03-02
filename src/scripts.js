@@ -67,11 +67,36 @@ function generateAvailableRooms(rooms) {
 }
 
 function generateReservations(bookings) {
-  // let today = (new Date(Date.now()).toISOString()).substring(0, 10).replace(/-/g, "/");
   let today = Date.now();
+  
+  let futureReservations = bookings.filter(booking => {
+    return Date.parse(booking.date) > today
+  });
 
-  let futureBookings = bookings
+  let pastReservations = bookings.filter(booking => {
+    return Date.parse(booking.date) < today
+  });
+  
+  upcomingMinis.innerHTML = "";
+  pastMinis.innerHTML = "";
 
+  futureReservations.forEach(reservation => {
+    upcomingMinis.innerHTML += `
+    <div class="mini-room-booked" id="${reservation.roomNumber}">
+      <h3>Residential Suite</h3>
+      <h3>${reservation.date}</h3>
+    </div>
+    `;
+  });
+  
+  pastReservations.forEach(reservation => {
+    pastMinis.innerHTML += `
+    <div class="mini-room-booked" id="${reservation.roomNumber}">
+      <h3>Residential Suite</h3>
+      <h3>${reservation.date}</h3>
+    </div>
+    `;
+  });
 }
 
 function updateUserName(user) {
