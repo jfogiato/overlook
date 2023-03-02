@@ -21,8 +21,12 @@ describe('Booking Repository', () => {
     expect(bookingRepo.bookings).to.deep.equal(bookings);
   });
 
-  it('Should have all available rooms', () => {
+  it('Should have a list of all rooms', () => {
     expect(bookingRepo.rooms).to.deep.equal(rooms);
+  });
+
+  it('Should have a list of all available rooms', () => {
+    expect(bookingRepo.availableRooms).to.deep.equal([]);
   });
 
   it('Should be able to show available rooms for a given date', () => {
@@ -213,6 +217,7 @@ describe('Booking Repository', () => {
       }
     ];
     expect(bookingRepo.getAvailableRooms('2022/04/22')).to.deep.equal(availableRooms);
+    expect(bookingRepo.availableRooms).to.deep.equal(availableRooms);
   });
 
 });
