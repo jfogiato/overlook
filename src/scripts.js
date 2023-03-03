@@ -46,57 +46,57 @@ const roomDescriptions = {
 
 // EVENT LISTENERS 👂 -----------------------------------------------
 //  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
-window.addEventListener("load", () => {
-  apiObject.getAllData()
-  .then(data => {
-    currentUser = new User(data[0].customers[0]);
-    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-    updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
-    updateuserNameDisplay(currentUser);
-    // generateReservations(currentUser.bookings);
-  })
-})
-
-// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
 // window.addEventListener("load", () => {
 //   apiObject.getAllData()
 //   .then(data => {
+//     currentUser = new User(data[0].customers[0]);
 //     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-//   });
-// });
+//     updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+//     updateuserNameDisplay(currentUser);
+//     generateReservations(currentUser.bookings);
+//   })
+// })
 
-// loginForm.addEventListener("submit", (e) => {
-//   e.preventDefault()
-//   let userNameAttempt = userName.value;
-//   let passwordAttempt = password.value;
+// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
+window.addEventListener("load", () => {
+  apiObject.getAllData()
+  .then(data => {
+    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
+  });
+});
 
-//   let userNameString = userNameAttempt.split(/[0-9]/)[0];
-//   let userNumber = parseInt(userNameAttempt.match(/\d+/g));
-//   let isUser = (userNameString === 'customer' || userNameString === 'manager');
-//   let isValidPassword = passwordAttempt === 'overlook2021';
-//   let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
-//   let isManager = userName.value === 'manager';
-//   let isValidUser = (userNameAttempt && isUser && isValidPassword);
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault()
+  let userNameAttempt = userName.value;
+  let passwordAttempt = password.value;
 
-//   if (isValidUser && isManager) {
-//     updateHeader(userNameAttempt);
-//     updateuserNameDisplay({name: 'Manager'});
-//     show(userSearchForm);
-//     successfulLogin();
-//   } else if (isValidUser && isValidUserNumber) {
-//     apiObject.apiRequest("GET", `customers/${userNumber}`)
-//       .then(data => {
-//         currentUser = new User(data);
-//         updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser);
-//         updateuserNameDisplay(currentUser);
-//         generateReservations(currentUser.bookings);
-//         successfulLogin();
-//       })
-//       .catch(err => `do some stuff`) // add DOM handling here
-//   } else {
-//     alert("AHHHHHHHHHHHHHHHHHH")
-//   }
-// });
+  let userNameString = userNameAttempt.split(/[0-9]/)[0];
+  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
+  let isUser = (userNameString === 'customer' || userNameString === 'manager');
+  let isValidPassword = passwordAttempt === 'overlook2021';
+  let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
+  let isManager = userName.value === 'manager';
+  let isValidUser = (userNameAttempt && isUser && isValidPassword);
+
+  if (isValidUser && isManager) {
+    updateHeader(userNameAttempt);
+    updateuserNameDisplay({name: 'Manager'});
+    show(userSearchForm);
+    successfulLogin();
+  } else if (isValidUser && isValidUserNumber) {
+    apiObject.apiRequest("GET", `customers/${userNumber}`)
+      .then(data => {
+        currentUser = new User(data);
+        updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser);
+        updateuserNameDisplay(currentUser);
+        generateReservations(currentUser.bookings);
+        successfulLogin();
+      })
+      .catch(err => `do some stuff`) // add DOM handling here
+  } else {
+    alert("AHHHHHHHHHHHHHHHHHH")
+  }
+});
 // ----------------------------------------
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -130,7 +130,18 @@ userSearchForm.addEventListener("submit", (e) => {
   currentUser.calculateTotalSpent(bookingRepo.rooms);
   updateUserSpentHeader(currentUser);
   show(userSpentHeader);
-})
+});
+
+upcomingMinis.addEventListener('click', (e) => {
+  let currentMiniCard = e.target.parentNode;
+  let deleteButton = currentMiniCard.children[1]
+  hide(currentMiniCard.children[0]);
+  show(currentMiniCard.children[1]);
+  deleteButton.addEventListener('click', (e) => {
+    deleteBooking(currentMiniCard.id);
+
+  });
+});
 
 
 // FUNCTIONS ⚙️ -----------------------------------------------
@@ -146,6 +157,18 @@ function bookRoom(room, user) {
           generateReservations(currentUser.bookings);
         })
     })
+}
+
+function deleteBooking(id) {
+  apiObject.apiRequest("DELETE", `bookings/${id}`)
+    .then(() => {
+      apiObject.apiRequest("GET", "bookings")
+        .then(response => {
+          bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
+          updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+          generateReservations(currentUser.bookings);
+        });
+    });
 }
 
 function generateModal(roomList, roomNumber) {
@@ -220,8 +243,9 @@ function generateReservations(bookings) {
 
   futureReservations.forEach(reservation => {
     upcomingMinis.innerHTML += `
-    <div class="mini-room-booked" id="${reservation.roomNumber}">
-      <h3 tabindex="0">Booking</h3>
+    <div class="mini-room-booked" id="${reservation.id}">
+      <h3 tabindex="0">Room ${reservation.roomNumber}</h3>
+      <button class="delete-reservation hidden"id="deleteReservation">Delete.</button>
       <h3 tabindex="0">${reservation.date}</h3>
     </div>
     `;
@@ -229,8 +253,8 @@ function generateReservations(bookings) {
 
   pastReservations.forEach(reservation => {
     pastMinis.innerHTML += `
-    <div class="mini-room-booked" id="${reservation.roomNumber}">
-      <h3 tabindex="0">Booking</h3>
+    <div class="mini-room-booked" id="${reservation.id}">
+      <h3 tabindex="0">Room ${reservation.roomNumber}</h3>
       <h3 tabindex="0">${reservation.date}</h3>
     </div>
     `;

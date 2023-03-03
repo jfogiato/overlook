@@ -318,9 +318,19 @@ h2 {
   width: 80%;
   margin: 1vmin;
   justify-content: space-evenly;
-  padding: 1vmin;
   border-radius: 4px;
   background-color: #ffffff2e;
+}
+
+.delete-reservation {
+  height: auto;
+  width: auto;
+}
+
+.mini-room-booked > h3 {
+  width: 50%;
+  height: 100%;
+  padding: 1vmin;
   cursor: pointer;
 }
 
