@@ -15,8 +15,7 @@ const loginPage = document.getElementById('loginPage');
 const header = document.querySelector('header');
 const main = document.querySelector('main');
 const userNameDisplay = document.getElementById("userNameDisplay");
-const totalSpent = document.getElementById("totalSpent");
-const totalRewards = document.getElementById("totalRewards");
+const subHeader = document.getElementById("subHeader");
 const modalSection = document.getElementById("modalSection");
 const miniRoomCards = document.getElementById("miniRoomCards");
 const upcomingMinis = document.getElementById("upcomingMinis");
@@ -29,6 +28,7 @@ const userName = document.getElementById('userName');
 const password = document.getElementById('password');
 const searchButton = document.getElementById("searchButton");
 const searchDate = document.getElementById("reservationDate");
+const filterForm = document.getElementById("filterForm");
 const filter = document.getElementById("filters");
 
 // GLOBAL VARIABLES 🌍 -----------------------------------------------
@@ -42,57 +42,53 @@ const roomDescriptions = {
 }
 
 // EVENT LISTENERS 👂 -----------------------------------------------
-//  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
-// window.addEventListener("load", () => {
-//   apiObject.getAllData()
-//   .then(data => {
-//     currentUser = new User(data[0].customers[0]);
-//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
-//     currentUser.getBookings(bookingRepo.bookings);
-//     currentUser.calculateTotalSpent(bookingRepo.rooms);
-//     updateuserNameDisplay(currentUser);
-//     updateUserSpent(currentUser);
-//     generateReservations(currentUser.bookings);
-//   })
-// })
-
-// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
-loginForm.addEventListener('submit', (e) => {
-  e.preventDefault()
-
-  let userNameAttempt = userName.value;
-  let passwordAttempt = password.value;
-  let userNumber = parseInt(userNameAttempt.match(/\d+/g))
-
-  if (passwordAttempt === 'overlook2021' && userNumber >= 1 && userNumber <= 50) {
-    apiObject.apiRequest("GET", `customers/${userNumber}`)
-      .then(data => {
-        currentUser = new User(data);
-        currentUser.getBookings(bookingRepo.bookings);
-        currentUser.calculateTotalSpent(bookingRepo.rooms);
-        updateUserSpent(currentUser);
-        updateuserNameDisplay(currentUser);
-        generateReservations(currentUser.bookings);
-        hide(loginPage);
-        show(header);
-        show(main);
-      });
-  } else {
-    alert('AHHHHHHHHHHHHHHHHHH')
-  }
-});
-
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
-  })
+  });
 });
+
+//  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
+window.addEventListener("load", () => {
+  apiObject.getAllData()
+  .then(data => {
+    currentUser = new User(data[0].customers[0]);
+    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
+    updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+    generateReservations(currentUser.bookings);
+  })
+})
+
+// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
+// loginForm.addEventListener('submit', (e) => {
+//   e.preventDefault()
+
+//   let userNameAttempt = userName.value;
+//   let passwordAttempt = password.value;
+//   let userNumber = parseInt(userNameAttempt.match(/\d+/g))
+
+//   if (passwordAttempt === 'overlook2021' && userNumber >= 1 && userNumber <= 50) {
+//     apiObject.apiRequest("GET", `customers/${userNumber}`)
+//       .then(data => {
+//         currentUser = new User(data);
+//         updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser)
+//         generateReservations(currentUser.bookings);
+//         hide(loginPage);
+//         show(header);
+//         show(main);
+//       })
+//       .catch(err => `do some stuff`) // add DOM handling here
+//   } else {
+//     alert('AHHHHHHHHHHHHHHHHHH')
+//   }
+// });
 
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
-  let availableRooms = bookingRepo.getAvailableRooms(reservationDate.value.replace(/-/g, "/"));
+  let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
   generateAvailableRooms(availableRooms);
+  show(filterForm);
 });
 
 filter.addEventListener("change", (e) => {
@@ -112,10 +108,10 @@ modalSection.addEventListener("click", (e) => {
 
 
 // FUNCTIONS ⚙️ -----------------------------------------------
-function bookRoom(room) {
-  let date = searchDate.value.replace(/-/g, "/");
+function bookRoom(room, user) {
+  let date = convertDateDashes(searchDate.value);
 
-  apiObject.apiRequest("POST", "bookings", currentUser.id, date, room.number)
+  apiObject.apiRequest("POST", "bookings", user.id, date, room.number)
     .then(() => {
       apiObject.apiRequest("GET", "bookings")
         .then(response => {
@@ -148,7 +144,7 @@ function generateModal(roomList, roomNumber) {
     </section>
   `;
   document.getElementById("bookButton").addEventListener("click", () => {
-    bookRoom(room);
+    bookRoom(room, currentUser);
   });
 }
 
@@ -182,6 +178,13 @@ function generateAvailableRooms(rooms) {
   }
 }
 
+function updateBookings(allBookings, rooms, user) {
+  currentUser.getBookings(allBookings);
+  currentUser.calculateTotalSpent(rooms);
+  updateuserNameDisplay(user);
+  updateHeader(user);
+}
+
 function generateReservations(bookings) {
   let today = Date.now();
   
@@ -199,7 +202,7 @@ function generateReservations(bookings) {
   futureReservations.forEach(reservation => {
     upcomingMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.roomNumber}">
-      <h3 tabindex="0">Residential Suite</h3>
+      <h3 tabindex="0">Booking</h3>
       <h3 tabindex="0">${reservation.date}</h3>
     </div>
     `;
@@ -208,7 +211,7 @@ function generateReservations(bookings) {
   pastReservations.forEach(reservation => {
     pastMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.roomNumber}">
-      <h3 tabindex="0">Residential Suite</h3>
+      <h3 tabindex="0">Booking</h3>
       <h3 tabindex="0">${reservation.date}</h3>
     </div>
     `;
@@ -219,9 +222,17 @@ function updateuserNameDisplay(user) {
   userNameDisplay.innerText = user.name;
 }
 
-function updateUserSpent(user) {
-  totalSpent.innerText = new Intl.NumberFormat().format(user.totalSpent);
-  totalRewards.innerText = user.totalRewards;
+function updateHeader(user) {
+  if (user === 'manager') {
+    let today = convertDateDashes(new Date(Date.now()).toISOString().split('T')[0]);
+    let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
+    let percentRoomsBooked = ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)
+    subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${percentRoomsBooked}% full.`
+  } else {
+    let totalSpent = new Intl.NumberFormat().format(user.totalSpent);
+    let totalRewards = user.totalRewards;
+    subHeader.innerText = `You have spent $${totalSpent} and accrued ${totalRewards} reward points.`;
+  }
 }
 
 function hide(element) {
@@ -230,4 +241,12 @@ function hide(element) {
 
 function show(element) {
   element.classList.remove("hidden");
+}
+
+function convertDateDashes(date) {
+  return date.replace(/-/g, "/");
+}
+
+function showManagerView() {
+
 }

@@ -26,23 +26,17 @@ class BookingRepository {
     return this.availableRooms;
   }
 
-  addBooking(room, date, user) {
-    let bookingObject = {
-      id: Date.now(),
-      userID: user,
-      date: date,
-      roomNumber: room
-    };
-
-    let newBooking = new Booking(bookingObject);
-
-    this.bookings.push(newBooking);
-
-    this.availableRooms.forEach((availRoom, index) => {
-      if (availRoom.number === room) {
-        this.availableRooms.splice(index, 1);
+  getTotalBookedDollars(date) {
+    return this.bookings.reduce((acc, booking) => {
+      if(booking.date === date) {
+        this.rooms.forEach(room => {
+          if (room.number === booking.roomNumber) {
+            acc += room.costPerNight;
+          }
+        });
       }
-    });
+      return acc
+    }, 0);
   }
 
 }

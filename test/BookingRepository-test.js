@@ -220,11 +220,8 @@ describe('Booking Repository', () => {
     expect(bookingRepo.availableRooms).to.deep.equal(availableRooms);
   });
 
-  it('Should be able to add a booking', () => {
-    bookingRepo.getAvailableRooms('2023/04/20');
-    bookingRepo.addBooking(5, '2023/04/20', 1);
-    expect(bookingRepo.bookings[bookingRepo.bookings.length - 1].roomNumber).to.equal(5);
-    expect(bookingRepo.availableRooms.length).to.equal(24);
+  it('Should be able to get the total booked dollars for a given date', () => {
+    expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(470.92);
   });
 
 });
