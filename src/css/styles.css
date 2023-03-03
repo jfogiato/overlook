@@ -10,6 +10,7 @@
 * {
   font-family: 'Sanchez', serif;
   margin: 0;
+  text-align: center;
 }
 
 button {
@@ -52,7 +53,30 @@ header {
   background-color: #510056;
   color: #e3bc66;
   text-shadow: 1px 1px 2px black;
+  justify-content: center;
+}
+
+.header-text {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: space-evenly;
+}
+
+.user-search-form {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 4.5vmin;
+  right: 1vmin;
+  align-items: center;
+}
+
+.user-search-form > input, button {
+  width: 12vmin;
+  margin: 0;
 }
 
 main {
@@ -150,6 +174,7 @@ main {
 h2 {
   color:#e3bc66;
   text-shadow: 1px 1px 2px black;
+  text-align: center;
 }
 
 .left-side-create, .right-side-booked {
@@ -258,9 +283,9 @@ h2 {
   height: 50%;
 }
 
-.right-side-booked > h2 {
-  text-align: center;
-} 
+.user-spent-header {
+  font-size: large;
+}
 
 .upcoming-reservations, .past-reservations {
   height: 38%;
@@ -293,9 +318,19 @@ h2 {
   width: 80%;
   margin: 1vmin;
   justify-content: space-evenly;
-  padding: 1vmin;
   border-radius: 4px;
   background-color: #ffffff2e;
+}
+
+.delete-reservation {
+  height: auto;
+  width: auto;
+}
+
+.mini-room-booked > h3 {
+  width: 50%;
+  height: 100%;
+  padding: 1vmin;
   cursor: pointer;
 }
 

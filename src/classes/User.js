@@ -10,7 +10,7 @@ class User {
   }
 
   getBookings(allBookingData) {
-    this.bookings = allBookingData.filter(booking => booking.userID === this.id);
+    return this.bookings = allBookingData.filter(booking => booking.userID === this.id);
   }
 
   calculateTotalSpent(allRooms) {
@@ -20,6 +20,8 @@ class User {
     }, 0);
     
     this.calculateRewards();
+
+    return this.totalSpent;
   }
 
   calculateRewards() {

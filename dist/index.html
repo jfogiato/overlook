@@ -23,8 +23,14 @@
   </section>
   <header class="hidden">
     <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
-    <h1 tabindex="0">Welcome, <span id="userNameDisplay">Name</span>.</h1>
-    <h2 tabindex="0">You've spent $<span id="totalSpent">0000</span> and accrued <span id="totalRewards">0000</span> reward points.</h2>
+    <section class="header-text">
+      <h1 tabindex="0">Welcome, <span id="userNameDisplay">Name</span>.</h1>
+      <h2 id="subHeader" tabindex="0"></h2>
+    </section>
+    <form class="user-search-form hidden" id="userSearchForm">
+      <input id="userSearchValue" type="text" placeholder="User Search.">
+      <button type="submit" id="searchUserButton">Go.</button>
+    </form>
   </header>
   <main class="hidden">
     <section class="modal-section hidden" id="modalSection">
@@ -33,12 +39,12 @@
     <aside class="left-side-create">
       <form class="date-selection">
         <label for="reservationDate" tabindex="0">Make a new reservation.</label>
-        <input type="date" id="reservationDate" name="reservation-date" class="reservation-date" tabindex="0">
+        <input type="date" id="reservationDate" name="reservation-date" class="reservation-date" tabindex="0"> 
         <button type="submit" id="searchButton" tabindex="0">Search.</button>
       </form>
       <section class="room-options">
-        <form class="filter-form">
-          <label for="filters" tabindex="0">Filter Rooms.</label>
+        <form class="filter-form hidden" id="filterForm">
+          <label for="filters" tabindex="0">Filter available rooms.</label>
           <select name="filter-rooms" class ="filters" id="filters" tabindex="0">
             <option id="filterPlaceholder" value="" disabled selected>Select a room type.</option>
             <option value="Residential Suite">Residential Suite</option>
@@ -53,13 +59,14 @@
       </section>
     </aside>
     <aside class="right-side-booked">
-      <h2 tabindex="0">Your upcoming reservations.</h2>
+      <h2 class="user-spent-header" id="userSpentHeader"></h2>
+      <h2 tabindex="0">Upcoming reservations.</h2>
       <section class="upcoming-reservations">
         <section class="upcoming-minis" id="upcomingMinis">
          <!-- Future reservations go here! -->
         </section>
       </section>
-      <h2 tabindex="0">Your past reservations.</h2>
+      <h2 tabindex="0">Past reservations.</h2>
       <section class="past-reservations">
         <section class="past-minis" id="pastMinis">
          <!-- Past reservations go here! -->

@@ -1,16 +1,18 @@
 import chai from 'chai';
 import BookingRepository from '../src/classes/BookingRepository';
 import testData from './test-data';
+import User from '../src/classes/User';
 
 const expect = chai.expect;
 
 describe('Booking Repository', () => {
-  let bookingRepo, bookings, rooms;
+  let bookingRepo, bookings, rooms, users;
 
   beforeEach( () => {
     bookings = testData.bookings;
     rooms = testData.rooms;
-    bookingRepo = new BookingRepository(bookings, rooms);
+    users = testData.customers;
+    bookingRepo = new BookingRepository(bookings, rooms, users);
   });
 
   it('Should be an instance of Booking Repository', () => {
@@ -23,6 +25,10 @@ describe('Booking Repository', () => {
 
   it('Should have a list of all rooms', () => {
     expect(bookingRepo.rooms).to.deep.equal(rooms);
+  });
+
+  it('Should have a list of all customers', () => {
+    expect(bookingRepo.users).to.deep.equal(users.map(user => new User(user)));
   });
 
   it('Should have a list of all available rooms', () => {
@@ -220,11 +226,8 @@ describe('Booking Repository', () => {
     expect(bookingRepo.availableRooms).to.deep.equal(availableRooms);
   });
 
-  it('Should be able to add a booking', () => {
-    bookingRepo.getAvailableRooms('2023/04/20');
-    bookingRepo.addBooking(5, '2023/04/20', 1);
-    expect(bookingRepo.bookings[bookingRepo.bookings.length - 1].roomNumber).to.equal(5);
-    expect(bookingRepo.availableRooms.length).to.equal(24);
+  it('Should be able to get the total booked dollars for a given date', () => {
+    expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(470.92);
   });
 
 });
