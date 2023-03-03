@@ -41,6 +41,10 @@ class BookingRepository {
     }, 0);
   }
 
+  getUserInfo(name) {
+    return this.users.find(user => user.name === name);
+  }
+
 }
 
 export default BookingRepository;

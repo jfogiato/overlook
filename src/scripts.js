@@ -27,6 +27,7 @@ const loginForm = document.getElementById("loginForm");
 const userName = document.getElementById("userName");
 const password = document.getElementById("password");
 const userSearchForm = document.getElementById("userSearchForm");
+const userSearchValue = document.getElementById("userSearchValue");
 const searchButton = document.getElementById("searchButton");
 const searchDate = document.getElementById("reservationDate");
 const filterForm = document.getElementById("filterForm");
@@ -50,6 +51,7 @@ const roomDescriptions = {
 //     currentUser = new User(data[0].customers[0]);
 //     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
 //     updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+//     updateuserNameDisplay(currentUser);
 //     generateReservations(currentUser.bookings);
 //   })
 // })
@@ -76,16 +78,16 @@ loginForm.addEventListener("submit", (e) => {
   let isValidUser = (userNameAttempt && isUser && isValidPassword);
 
   if (isValidUser && isManager) {
-
-
-    show(userSearchForm)
+    updateHeader(userNameAttempt);
+    updateuserNameDisplay({name: 'Manager'});
+    show(userSearchForm);
     successfulLogin();
-    
   } else if (isValidUser && isValidUserNumber) {
     apiObject.apiRequest("GET", `customers/${userNumber}`)
       .then(data => {
         currentUser = new User(data);
-        updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser)
+        updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser);
+        updateuserNameDisplay(currentUser);
         generateReservations(currentUser.bookings);
         successfulLogin();
       })
@@ -94,7 +96,7 @@ loginForm.addEventListener("submit", (e) => {
     alert("AHHHHHHHHHHHHHHHHHH")
   }
 });
-
+// ----------------------------------------
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
   let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
@@ -117,6 +119,14 @@ modalSection.addEventListener("click", (e) => {
   e.target.id === "modalSection" ? hide(modalSection) : null;
 });
 
+userSearchForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  let user = bookingRepo.getUserInfo(userSearchValue.value);
+  let userBookings = user.getBookings(bookingRepo.bookings);
+  generateReservations(userBookings);
+})
+
 
 // FUNCTIONS ⚙️ -----------------------------------------------
 function bookRoom(room, user) {
@@ -127,7 +137,7 @@ function bookRoom(room, user) {
       apiObject.apiRequest("GET", "bookings")
         .then(response => {
           bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
-          currentUser.getBookings(bookingRepo.bookings);
+          updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
           generateReservations(currentUser.bookings);
         })
     })
@@ -189,13 +199,6 @@ function generateAvailableRooms(rooms) {
   }
 }
 
-function updateBookings(allBookings, rooms, user) {
-  currentUser.getBookings(allBookings);
-  currentUser.calculateTotalSpent(rooms);
-  updateuserNameDisplay(user);
-  updateHeader(user);
-}
-
 function generateReservations(bookings) {
   let today = Date.now();
   
@@ -229,17 +232,25 @@ function generateReservations(bookings) {
   });
 }
 
+function updateBookings(allBookings, rooms, user) {
+  currentUser.getBookings(allBookings);
+  currentUser.calculateTotalSpent(rooms);
+  updateHeader(user);
+}
+
 function updateuserNameDisplay(user) {
   userNameDisplay.innerText = user.name;
 }
 
 function updateHeader(user) {
   if (user === "manager") {
-    let today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
+    updateuserNameDisplay(user);
+    let today = '2022/04/22' // convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
     let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
-    let percentRoomsBooked = ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)
-    subHeader.innerText = `Today"s revenue is $${totalBookedToday}, and we are ${percentRoomsBooked}% full.`
+    let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
+    subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${Math.round(percentRoomsBooked * 100)}% full.`
   } else {
+
     let totalSpent = new Intl.NumberFormat().format(user.totalSpent);
     let totalRewards = user.totalRewards;
     subHeader.innerText = `You have spent $${totalSpent} and accrued ${totalRewards} reward points.`;
