@@ -99,9 +99,11 @@ loginForm.addEventListener("submit", (e) => {
 // ----------------------------------------
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
-  let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
-  generateAvailableRooms(availableRooms);
-  show(filterForm);
+  if (reservationDate.value) {
+    let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
+    generateAvailableRooms(availableRooms);
+    show(filterForm);
+  }
 });
 
 filter.addEventListener("change", (e) => {
