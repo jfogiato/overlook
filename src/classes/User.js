@@ -20,6 +20,8 @@ class User {
     }, 0);
     
     this.calculateRewards();
+
+    return this.totalSpent;
   }
 
   calculateRewards() {

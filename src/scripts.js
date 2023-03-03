@@ -16,6 +16,7 @@ const header = document.querySelector("header");
 const main = document.querySelector("main");
 const userNameDisplay = document.getElementById("userNameDisplay");
 const subHeader = document.getElementById("subHeader");
+const userSpentHeader = document.getElementById("userSpentHeader");
 const modalSection = document.getElementById("modalSection");
 const miniRoomCards = document.getElementById("miniRoomCards");
 const upcomingMinis = document.getElementById("upcomingMinis");
@@ -45,57 +46,57 @@ const roomDescriptions = {
 
 // EVENT LISTENERS 👂 -----------------------------------------------
 //  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
-// window.addEventListener("load", () => {
-//   apiObject.getAllData()
-//   .then(data => {
-//     currentUser = new User(data[0].customers[0]);
-//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-//     updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
-//     updateuserNameDisplay(currentUser);
-//     generateReservations(currentUser.bookings);
-//   })
-// })
-
-// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
+    currentUser = new User(data[0].customers[0]);
     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-  });
-});
+    updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+    updateuserNameDisplay(currentUser);
+    // generateReservations(currentUser.bookings);
+  })
+})
 
-loginForm.addEventListener("submit", (e) => {
-  e.preventDefault()
-  let userNameAttempt = userName.value;
-  let passwordAttempt = password.value;
+// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
+// window.addEventListener("load", () => {
+//   apiObject.getAllData()
+//   .then(data => {
+//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
+//   });
+// });
 
-  let userNameString = userNameAttempt.split(/[0-9]/)[0];
-  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
-  let isUser = (userNameString === 'customer' || userNameString === 'manager');
-  let isValidPassword = passwordAttempt === 'overlook2021';
-  let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
-  let isManager = userName.value === 'manager';
-  let isValidUser = (userNameAttempt && isUser && isValidPassword);
+// loginForm.addEventListener("submit", (e) => {
+//   e.preventDefault()
+//   let userNameAttempt = userName.value;
+//   let passwordAttempt = password.value;
 
-  if (isValidUser && isManager) {
-    updateHeader(userNameAttempt);
-    updateuserNameDisplay({name: 'Manager'});
-    show(userSearchForm);
-    successfulLogin();
-  } else if (isValidUser && isValidUserNumber) {
-    apiObject.apiRequest("GET", `customers/${userNumber}`)
-      .then(data => {
-        currentUser = new User(data);
-        updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser);
-        updateuserNameDisplay(currentUser);
-        generateReservations(currentUser.bookings);
-        successfulLogin();
-      })
-      .catch(err => `do some stuff`) // add DOM handling here
-  } else {
-    alert("AHHHHHHHHHHHHHHHHHH")
-  }
-});
+//   let userNameString = userNameAttempt.split(/[0-9]/)[0];
+//   let userNumber = parseInt(userNameAttempt.match(/\d+/g));
+//   let isUser = (userNameString === 'customer' || userNameString === 'manager');
+//   let isValidPassword = passwordAttempt === 'overlook2021';
+//   let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
+//   let isManager = userName.value === 'manager';
+//   let isValidUser = (userNameAttempt && isUser && isValidPassword);
+
+//   if (isValidUser && isManager) {
+//     updateHeader(userNameAttempt);
+//     updateuserNameDisplay({name: 'Manager'});
+//     show(userSearchForm);
+//     successfulLogin();
+//   } else if (isValidUser && isValidUserNumber) {
+//     apiObject.apiRequest("GET", `customers/${userNumber}`)
+//       .then(data => {
+//         currentUser = new User(data);
+//         updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser);
+//         updateuserNameDisplay(currentUser);
+//         generateReservations(currentUser.bookings);
+//         successfulLogin();
+//       })
+//       .catch(err => `do some stuff`) // add DOM handling here
+//   } else {
+//     alert("AHHHHHHHHHHHHHHHHHH")
+//   }
+// });
 // ----------------------------------------
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -123,10 +124,12 @@ modalSection.addEventListener("click", (e) => {
 
 userSearchForm.addEventListener("submit", (e) => {
   e.preventDefault();
-
-  let user = bookingRepo.getUserInfo(userSearchValue.value);
-  let userBookings = user.getBookings(bookingRepo.bookings);
+  currentUser = bookingRepo.getUserInfo(userSearchValue.value);
+  let userBookings = currentUser.getBookings(bookingRepo.bookings);
   generateReservations(userBookings);
+  currentUser.calculateTotalSpent(bookingRepo.rooms);
+  updateUserSpentHeader(currentUser);
+  show(userSpentHeader);
 })
 
 
@@ -244,6 +247,10 @@ function updateuserNameDisplay(user) {
   userNameDisplay.innerText = user.name;
 }
 
+function updateUserSpentHeader(user) {
+  userSpentHeader.innerText = `${user.name} has spent $${convertSpent(user.totalSpent)} at the Grand Budapest Hotel.`
+}
+
 function updateHeader(user) {
   if (user === "manager") {
     updateuserNameDisplay(user);
@@ -252,8 +259,7 @@ function updateHeader(user) {
     let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
     subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${Math.round(percentRoomsBooked * 100)}% full.`
   } else {
-
-    let totalSpent = new Intl.NumberFormat().format(user.totalSpent);
+    let totalSpent = convertSpent(user.totalSpent);
     let totalRewards = user.totalRewards;
     subHeader.innerText = `You have spent $${totalSpent} and accrued ${totalRewards} reward points.`;
   }
@@ -277,6 +283,6 @@ function convertDateDashes(date) {
   return date.replace(/-/g, "/");
 }
 
-function showManagerView() {
-
+function convertSpent(stringNum) {
+  return new Intl.NumberFormat().format(stringNum);
 }

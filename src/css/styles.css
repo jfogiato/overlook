@@ -70,7 +70,7 @@ header {
   flex-direction: column;
   position: fixed;
   top: 4.5vmin;
-  right: 0;
+  right: 1vmin;
   align-items: center;
 }
 
@@ -283,9 +283,9 @@ h2 {
   height: 50%;
 }
 
-.right-side-booked > h2 {
-  text-align: center;
-} 
+.user-spent-header {
+  font-size: large;
+}
 
 .upcoming-reservations, .past-reservations {
   height: 38%;
