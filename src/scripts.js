@@ -133,14 +133,15 @@ userSearchForm.addEventListener("submit", (e) => {
 });
 
 upcomingMinis.addEventListener('click', (e) => {
-  let currentMiniCard = e.target.parentNode;
-  let deleteButton = currentMiniCard.children[1]
-  hide(currentMiniCard.children[0]);
-  show(currentMiniCard.children[1]);
-  deleteButton.addEventListener('click', (e) => {
-    deleteBooking(currentMiniCard.id);
-
-  });
+  if (e.target.id !== 'upcomingMinis') {
+    let currentMiniCard = e.target.parentNode;
+    let deleteButton = currentMiniCard.children[1]
+    hide(currentMiniCard.children[0]);
+    show(currentMiniCard.children[1]);
+    deleteButton.addEventListener('click', (e) => {
+      deleteBooking(currentMiniCard.id);
+    });
+  }
 });
 
 

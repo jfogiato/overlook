@@ -29,7 +29,8 @@ html {
   width: 100vw;
   height: 100vh;
   top: 0;
-  background-color: #ffcbe1;
+  /* background-color: #ffcbe1; */
+  background-image: url("https://thumbs.dreamstime.com/b/pink-plastered-concrete-wall-texture-painted-built-structure-grungy-uneven-plaster-abstract-background-shabby-155634485.jpg");
 }
 
 .logo {
@@ -88,7 +89,7 @@ main {
 }
 
 .login-page {
-  background-color: #ffbdd8;
+  /* background-color: #ffbdd8; */
   height: 100vh;
   width: 100%;
   display: flex;
@@ -248,7 +249,7 @@ h2 {
   justify-content: flex-start;
   align-items: center;
   border: 8px ridge #e3bc66;
-  background-color:#fda4c9;
+  background-color:#fcc3d3;
   box-shadow: 3px 2px 5px rgb(0 0 0);
 }
 
@@ -298,7 +299,7 @@ h2 {
   justify-content: flex-start;
   align-items: center;
   border: 8px ridge #e3bc66;
-  background-color:#fda4c9;
+  background-color:#fcc3d3;
   box-shadow: 3px 2px 5px rgb(0 0 0);
 }
 
