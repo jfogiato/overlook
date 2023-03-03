@@ -1,13 +1,16 @@
-// IMPORTS 📥
+// IMPORTS 📥 -----------------------------------------------
 import "./css/styles.css";
 import "./images/hotel-logo.png";
-import "./images/hotel-room.png";
+import "./images/single.png";
+import "./images/suite.png";
+import "./images/junior-suite.png";
+import "./images/residential-suite.png";
 import User from "./classes/User";
 import Booking from "./classes/Booking";
 import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
-// DOM VARIABLES - ELEMENTS 🖥️ 🌱
+// DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
 const loginPage = document.getElementById('loginPage');
 const header = document.querySelector('header');
 const main = document.querySelector('main');
@@ -20,7 +23,7 @@ const upcomingMinis = document.getElementById("upcomingMinis");
 const pastMinis = document.getElementById("pastMinis");
 const reservationDate = document.getElementById("reservationDate");
 
-// DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢
+// DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢 ----------------------------------------
 const loginForm = document.getElementById('loginForm');
 const userName = document.getElementById('userName');
 const password = document.getElementById('password');
@@ -28,17 +31,32 @@ const searchButton = document.getElementById("searchButton");
 const searchDate = document.getElementById("reservationDate");
 const filter = document.getElementById("filters");
 
-// GLOBAL VARIABLES 🌍
+// GLOBAL VARIABLES 🌍 -----------------------------------------------
 let currentUser;
 let bookingRepo;
 const roomDescriptions = {
-  "residential suite": "Very posh suite with stuff.",
-  "suite": "Slightly less posh with less stuff.",
-  "junior suite": "Like the regular suite, but more junior.",
-  "single room": "You're broke and single too, huh?"
+  "residential suite": ["Very posh suite with stuff.", "./images/residential-suite.png"],
+  "suite": ["Slightly less posh with less stuff.", "./images/suite.png"],
+  "junior suite": ["Like the regular suite, but more junior.", "./images/junior-suite.png"],
+  "single room": ["You're broke and single too, huh?", "./images/single.png"]
 }
 
-// EVENT LISTENERS 👂
+// EVENT LISTENERS 👂 -----------------------------------------------
+//  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
+// window.addEventListener("load", () => {
+//   apiObject.getAllData()
+//   .then(data => {
+//     currentUser = new User(data[0].customers[0]);
+//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
+//     currentUser.getBookings(bookingRepo.bookings);
+//     currentUser.calculateTotalSpent(bookingRepo.rooms);
+//     updateuserNameDisplay(currentUser);
+//     updateUserSpent(currentUser);
+//     generateReservations(currentUser.bookings);
+//   })
+// })
+
+// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault()
 
@@ -52,8 +70,8 @@ loginForm.addEventListener('submit', (e) => {
         currentUser = new User(data);
         currentUser.getBookings(bookingRepo.bookings);
         currentUser.calculateTotalSpent(bookingRepo.rooms);
-        updateuserNameDisplay(currentUser);
         updateUserSpent(currentUser);
+        updateuserNameDisplay(currentUser);
         generateReservations(currentUser.bookings);
         hide(loginPage);
         show(header);
@@ -93,7 +111,7 @@ modalSection.addEventListener("click", (e) => {
 });
 
 
-// FUNCTIONS ⚙️
+// FUNCTIONS ⚙️ -----------------------------------------------
 function bookRoom(room) {
   let date = searchDate.value.replace(/-/g, "/");
 
@@ -119,13 +137,13 @@ function generateModal(roomList, roomNumber) {
   modalSection.innerHTML = `
     <section class="modal" id="modal">
       <h3 tabindex="0">${room.roomType}</h3>
-      <img src="./images/hotel-room.png" alt="Hotel Room" tabindex="0">
+      <img src=${roomDescriptions[room.roomType][1]} alt="Hotel Room" tabindex="0">
       <div class="modal-room-info" id="modalRoomInfo">
         <p tabindex="0">${room.numBeds * multiplier} People</p>
         <p tabindex="0">${room.numBeds} ${room.bedSize} ${bed}</p>
         <p tabindex="0">${bidet}</p>
       </div>
-      <p tabindex="0">${roomDescriptions[room.roomType]}</p>
+      <p tabindex="0">${roomDescriptions[room.roomType][0]}</p>
       <button id="bookButton">Book it!</button>
     </section>
   `;
@@ -160,7 +178,7 @@ function generateAvailableRooms(rooms) {
         `;
       })
   } else {
-    miniRoomCards.innerHTML = `<div tabindex="0">Oh no!! It looks like we don't have any rooms that match your search. Please try a different search criteria!</div>`
+    miniRoomCards.innerHTML = `<div class="sorry-message" tabindex="0">Hmpf. It appears that we do not have a room that matches your search. Please try a different search criteria.</div>`
   }
 }
 
@@ -202,7 +220,7 @@ function updateuserNameDisplay(user) {
 }
 
 function updateUserSpent(user) {
-  totalSpent.innerText = user.totalSpent.toFixed(2);
+  totalSpent.innerText = new Intl.NumberFormat().format(user.totalSpent);
   totalRewards.innerText = user.totalRewards;
 }
 
