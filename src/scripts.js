@@ -11,9 +11,9 @@ import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
 // DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
-const loginPage = document.getElementById('loginPage');
-const header = document.querySelector('header');
-const main = document.querySelector('main');
+const loginPage = document.getElementById("loginPage");
+const header = document.querySelector("header");
+const main = document.querySelector("main");
 const userNameDisplay = document.getElementById("userNameDisplay");
 const subHeader = document.getElementById("subHeader");
 const modalSection = document.getElementById("modalSection");
@@ -23,9 +23,10 @@ const pastMinis = document.getElementById("pastMinis");
 const reservationDate = document.getElementById("reservationDate");
 
 // DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢 ----------------------------------------
-const loginForm = document.getElementById('loginForm');
-const userName = document.getElementById('userName');
-const password = document.getElementById('password');
+const loginForm = document.getElementById("loginForm");
+const userName = document.getElementById("userName");
+const password = document.getElementById("password");
+const userSearchForm = document.getElementById("userSearchForm");
 const searchButton = document.getElementById("searchButton");
 const searchDate = document.getElementById("reservationDate");
 const filterForm = document.getElementById("filterForm");
@@ -42,6 +43,18 @@ const roomDescriptions = {
 }
 
 // EVENT LISTENERS 👂 -----------------------------------------------
+//  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
+// window.addEventListener("load", () => {
+//   apiObject.getAllData()
+//   .then(data => {
+//     currentUser = new User(data[0].customers[0]);
+//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
+//     updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+//     generateReservations(currentUser.bookings);
+//   })
+// })
+
+// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
@@ -49,40 +62,38 @@ window.addEventListener("load", () => {
   });
 });
 
-//  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
-window.addEventListener("load", () => {
-  apiObject.getAllData()
-  .then(data => {
-    currentUser = new User(data[0].customers[0]);
-    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
-    updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
-    generateReservations(currentUser.bookings);
-  })
-})
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault()
+  let userNameAttempt = userName.value;
+  let passwordAttempt = password.value;
 
-// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
-// loginForm.addEventListener('submit', (e) => {
-//   e.preventDefault()
+  let userNameString = userNameAttempt.split(/[0-9]/)[0];
+  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
+  let isUser = (userNameString === 'customer' || userNameString === 'manager');
+  let isValidPassword = passwordAttempt === 'overlook2021';
+  let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
+  let isManager = userName.value === 'manager';
+  let isValidUser = (userNameAttempt && isUser && isValidPassword);
 
-//   let userNameAttempt = userName.value;
-//   let passwordAttempt = password.value;
-//   let userNumber = parseInt(userNameAttempt.match(/\d+/g))
+  if (isValidUser && isManager) {
 
-//   if (passwordAttempt === 'overlook2021' && userNumber >= 1 && userNumber <= 50) {
-//     apiObject.apiRequest("GET", `customers/${userNumber}`)
-//       .then(data => {
-//         currentUser = new User(data);
-//         updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser)
-//         generateReservations(currentUser.bookings);
-//         hide(loginPage);
-//         show(header);
-//         show(main);
-//       })
-//       .catch(err => `do some stuff`) // add DOM handling here
-//   } else {
-//     alert('AHHHHHHHHHHHHHHHHHH')
-//   }
-// });
+
+    show(userSearchForm)
+    successfulLogin();
+    
+  } else if (isValidUser && isValidUserNumber) {
+    apiObject.apiRequest("GET", `customers/${userNumber}`)
+      .then(data => {
+        currentUser = new User(data);
+        updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser)
+        generateReservations(currentUser.bookings);
+        successfulLogin();
+      })
+      .catch(err => `do some stuff`) // add DOM handling here
+  } else {
+    alert("AHHHHHHHHHHHHHHHHHH")
+  }
+});
 
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();
@@ -223,11 +234,11 @@ function updateuserNameDisplay(user) {
 }
 
 function updateHeader(user) {
-  if (user === 'manager') {
-    let today = convertDateDashes(new Date(Date.now()).toISOString().split('T')[0]);
+  if (user === "manager") {
+    let today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
     let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
     let percentRoomsBooked = ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)
-    subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${percentRoomsBooked}% full.`
+    subHeader.innerText = `Today"s revenue is $${totalBookedToday}, and we are ${percentRoomsBooked}% full.`
   } else {
     let totalSpent = new Intl.NumberFormat().format(user.totalSpent);
     let totalRewards = user.totalRewards;
@@ -241,6 +252,12 @@ function hide(element) {
 
 function show(element) {
   element.classList.remove("hidden");
+}
+
+function successfulLogin() {
+  hide(loginPage);
+  show(header);
+  show(main);
 }
 
 function convertDateDashes(date) {
