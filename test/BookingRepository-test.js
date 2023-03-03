@@ -1,16 +1,18 @@
 import chai from 'chai';
 import BookingRepository from '../src/classes/BookingRepository';
 import testData from './test-data';
+import User from '../src/classes/User';
 
 const expect = chai.expect;
 
 describe('Booking Repository', () => {
-  let bookingRepo, bookings, rooms;
+  let bookingRepo, bookings, rooms, users;
 
   beforeEach( () => {
     bookings = testData.bookings;
     rooms = testData.rooms;
-    bookingRepo = new BookingRepository(bookings, rooms);
+    users = testData.customers;
+    bookingRepo = new BookingRepository(bookings, rooms, users);
   });
 
   it('Should be an instance of Booking Repository', () => {
@@ -23,6 +25,10 @@ describe('Booking Repository', () => {
 
   it('Should have a list of all rooms', () => {
     expect(bookingRepo.rooms).to.deep.equal(rooms);
+  });
+
+  it('Should have a list of all customers', () => {
+    expect(bookingRepo.users).to.deep.equal(users.map(user => new User(user)));
   });
 
   it('Should have a list of all available rooms', () => {

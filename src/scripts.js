@@ -45,7 +45,7 @@ const roomDescriptions = {
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
-    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms);
+    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
   });
 });
 

@@ -1,10 +1,12 @@
 import Booking from "./Booking";
 import Room from "./Room";
+import User from "./User";
 
 class BookingRepository {
-  constructor(bookings, rooms) {
+  constructor(bookings, rooms, users) {
     this.bookings = bookings.map(booking => new Booking(booking));
     this.rooms = rooms.map(room => new Room(room));
+    this.users = users.map(user => new User(user));
     this.availableRooms = [];
   }
 
