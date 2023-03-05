@@ -46,61 +46,62 @@ const roomDescriptions = {
 
 // EVENT LISTENERS 👂 -----------------------------------------------
 //  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
-// window.addEventListener("load", () => {
-//   apiObject.getAllData()
-//   .then(data => {
-//     currentUser = new User(data[0].customers[0]);
-//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-//      currentUser.getBookings(bookingRepo.bookings);
-//      currentUser.calculateTotalSpent(bookingRepo.rooms);
-//      updateSpentRewardsHeader(currentUser);
-//     updateuserNameDisplay(currentUser);
-//     generateReservations(currentUser.bookings);
-//   })
-// })
-
-// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
+    currentUser = new User(data[0].customers[0]);
     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-  });
-});
+     currentUser.getBookings(bookingRepo.bookings);
+     currentUser.calculateTotalSpent(bookingRepo.rooms);
+     updateSpentRewardsHeader(currentUser);
+    updateuserNameDisplay(currentUser);
+    generateReservations(currentUser.bookings);
+  })
+})
 
-loginForm.addEventListener("submit", (e) => {
-  e.preventDefault()
+// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
+// window.addEventListener("load", () => {
+//   apiObject.getAllData()
+//   .then(data => {
+//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
+//   });
+// });
 
-  let userNameAttempt = userName.value;
-  let passwordAttempt = password.value;
-  let userNameString = userNameAttempt.split(/[0-9]/)[0];
-  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
-  let isUser = (userNameString === 'customer' || userNameString === 'manager');
-  let isValidPassword = passwordAttempt === 'overlook2021';
-  let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
-  let isManager = userName.value === 'manager';
-  let isValidUser = (userNameAttempt && isUser && isValidPassword);
+// loginForm.addEventListener("submit", (e) => {
+//   e.preventDefault()
 
-  if (isValidUser && isManager) {
-    updateSpentRewardsHeader(userNameAttempt);
-    updateuserNameDisplay({name: 'Manager'});
-    show(userSearchForm);
-    successfulLogin();
-  } else if (isValidUser && isValidUserNumber) {
-    apiObject.apiRequest("GET", `customers/${userNumber}`)
-      .then(data => {
-        currentUser = new User(data);
-        currentUser.getBookings(bookingRepo.bookings);
-        currentUser.calculateTotalSpent(bookingRepo.rooms);
-        updateSpentRewardsHeader(currentUser);
-        updateuserNameDisplay(currentUser);
-        generateReservations(currentUser.bookings);
-        successfulLogin();
-      })
-      .catch(err => `do some stuff`) // add DOM handling here
-  } else {
-    alert("AHHHHHHHHHHHHHHHHHH")
-  }
-});
+//   let userNameAttempt = userName.value;
+//   let passwordAttempt = password.value;
+//   let userNameString = userNameAttempt.split(/[0-9]/)[0];
+//   let userNumber = parseInt(userNameAttempt.match(/\d+/g));
+//   let isUser = (userNameString === 'customer' || userNameString === 'manager');
+//   let isValidPassword = passwordAttempt === 'overlook2021';
+//   let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
+//   let isManager = userName.value === 'manager';
+//   let isValidUser = (userNameAttempt && isUser && isValidPassword);
+
+//   if (isValidUser && isManager) {
+//     updateSpentRewardsHeader(userNameAttempt);
+//     updateuserNameDisplay({name: 'Manager'});
+//     show(userSearchForm);
+//     successfulLogin();
+//   } else if (isValidUser && isValidUserNumber) {
+//     apiObject.apiRequest("GET", `customers/${userNumber}`)
+//       .then(data => {
+//         currentUser = new User(data);
+//         currentUser.getBookings(bookingRepo.bookings);
+//         currentUser.calculateTotalSpent(bookingRepo.rooms);
+//         updateSpentRewardsHeader(currentUser);
+//         updateuserNameDisplay(currentUser);
+//         generateReservations(currentUser.bookings);
+//         successfulLogin();
+//       })
+//       .catch(err => `do some stuff`) // add DOM handling here
+//   } else {
+//     alert("AHHHHHHHHHHHHHHHHHH")
+//   }
+// });
+
 // ----------------------------------------
 searchButton.addEventListener("click", (e) => {
   e.preventDefault();

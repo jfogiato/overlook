@@ -13,12 +13,11 @@
   <section class="login-page" id="loginPage">
     <img class="login-logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
     <form class="login-form" id="loginForm">
-      <label for="username"><b>Username.</b></label>
+      <label for="userName">Username.</label>
       <input type="text" placeholder="Enter Username." name="username" id ="userName" required>
-      <label for="password"><b>Password.</b></label>
+      <label for="password">Password.</label>
       <input type="password" placeholder="Enter Password." name="password"  id ="password" required>
       <button type="submit" id="loginButton">Login.</button>
-      <label>
     </form>
   </section>
   <header class="hidden">
@@ -28,6 +27,7 @@
       <h2 id="subHeader" tabindex="0"></h2>
     </section>
     <form class="user-search-form hidden" id="userSearchForm">
+      <label for="userSearchValue" style="position: absolute; left: -100000px">User search.</label>
       <input id="userSearchValue" type="text" placeholder="User Search.">
       <button type="submit" id="searchUserButton">Go.</button>
     </form>

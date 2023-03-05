@@ -338,6 +338,12 @@ h2, h1, .date-selection > label {
   width: 50%;
   height: 100%;
   padding: 1vmin;
+}
+
+.upcoming-minis > .mini-room-booked > h3 {
+  width: 50%;
+  height: 100%;
+  padding: 1vmin;
   cursor: pointer;
 }
 
