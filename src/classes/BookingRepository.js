@@ -29,7 +29,7 @@ class BookingRepository {
   }
 
   getTotalBookedDollars(date) {
-    return this.bookings.reduce((acc, booking) => {
+    return Math.round(this.bookings.reduce((acc, booking) => {
       if(booking.date === date) {
         this.rooms.forEach(room => {
           if (room.number === booking.roomNumber) {
@@ -38,7 +38,7 @@ class BookingRepository {
         });
       }
       return acc
-    }, 0);
+    }, 0));
   }
 
   getUserInfo(name) {

@@ -155,7 +155,9 @@ function bookRoom(room, user) {
           bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
           currentUser.getBookings(bookingRepo.bookings);
           currentUser.calculateTotalSpent(bookingRepo.rooms);
-          updateSpentRewardsHeader(currentUser);
+          userNameDisplay.innerText === "Manager"
+          ? updateSpentRewardsHeader("manager")
+          : updateSpentRewardsHeader(currentUser);
           generateReservations(currentUser.bookings);
           hide(modalSection);
           generateAvailableRooms(bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value)));
@@ -256,7 +258,6 @@ function generateReservations(bookings) {
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   upcomingMinis.innerHTML = "";
-  pastMinis.innerHTML = "";
   futureReservations.forEach(reservation => {
     upcomingMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.id}">
@@ -267,6 +268,7 @@ function generateReservations(bookings) {
     `;
   });
 
+  pastMinis.innerHTML = "";
   pastReservations.forEach(reservation => {
     pastMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.id}">
@@ -295,7 +297,7 @@ function updateSpentRewardsHeader(user) {
     let today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
     let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
     let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
-    subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${Math.round(percentRoomsBooked * 100)}% full.`;
+    subHeader.innerText = `Today's revenue is $${totalBookedToday} and we are ${Math.round(percentRoomsBooked * 100)}% full.`;
   } else {
     let totalSpent = convertSpent(user.totalSpent);
     let totalRewards = user.totalRewards;
@@ -321,6 +323,10 @@ function logout() {
   show(loginPage);
   hide(header);
   hide(main);
+  hide(userSearchForm);
+  hide(userSpentHeader);
+  upcomingMinis.innerHTML = "";
+  pastMinis.innerHTML = "";
 }
 
 function unsuccessfulLogin(reason) {
@@ -335,7 +341,7 @@ function unsuccessfulLogin(reason) {
     hide(loginErrorText);
     resetLoginForm();
     loginErrorText.innerText = "";
-  }, 1500);
+  }, 1000);
 }
 
 function convertDateDashes(date) {

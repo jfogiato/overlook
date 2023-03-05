@@ -21,7 +21,7 @@ class User {
     
     this.calculateRewards();
 
-    return this.totalSpent;
+    return Math.round(this.totalSpent);
   }
 
   calculateRewards() {
