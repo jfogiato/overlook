@@ -249,7 +249,7 @@ function generateAvailableRooms(rooms) {
 }
 
 function generateReservations(bookings) {
-  let today = Date.now();
+  let today = Date.now() - 86400000;
   let futureReservations = bookings.filter(booking => {
     return Date.parse(booking.date) > today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
