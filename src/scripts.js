@@ -51,7 +51,9 @@ const roomDescriptions = {
 //   .then(data => {
 //     currentUser = new User(data[0].customers[0]);
 //     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-//     updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+//      currentUser.getBookings(bookingRepo.bookings);
+//      currentUser.calculateTotalSpent(bookingRepo.rooms);
+//      updateHeader(currentUser);
 //     updateuserNameDisplay(currentUser);
 //     generateReservations(currentUser.bookings);
 //   })
@@ -87,7 +89,9 @@ loginForm.addEventListener("submit", (e) => {
     apiObject.apiRequest("GET", `customers/${userNumber}`)
       .then(data => {
         currentUser = new User(data);
-        updateBookings(bookingRepo.bookings, bookingRepo.rooms,currentUser);
+        currentUser.getBookings(bookingRepo.bookings);
+        currentUser.calculateTotalSpent(bookingRepo.rooms);
+        updateHeader(currentUser);
         updateuserNameDisplay(currentUser);
         generateReservations(currentUser.bookings);
         successfulLogin();
@@ -145,6 +149,11 @@ upcomingMinis.addEventListener('click', (e) => {
 });
 
 
+
+function updateBookings(allBookings, rooms, user) {
+
+}
+
 // FUNCTIONS ⚙️ -----------------------------------------------
 function bookRoom(room, user) {
   let date = convertDateDashes(searchDate.value);
@@ -154,7 +163,9 @@ function bookRoom(room, user) {
       apiObject.apiRequest("GET", "bookings")
         .then(response => {
           bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
-          updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+          currentUser.getBookings(bookingRepo.bookings);
+          currentUser.calculateTotalSpent(bookingRepo.rooms);
+          updateHeader(currentUser);
           generateReservations(currentUser.bookings);
         })
     })
@@ -164,9 +175,11 @@ function deleteBooking(id) {
   apiObject.apiRequest("DELETE", `bookings/${id}`)
     .then(() => {
       apiObject.apiRequest("GET", "bookings")
-        .then(response => {
-          bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
-          updateBookings(bookingRepo.bookings, bookingRepo.rooms, currentUser);
+        .then(data => {
+          bookingRepo.bookings = data.bookings.map(booking => new Booking(booking));
+          currentUser.getBookings(bookingRepo.bookings);
+          currentUser.calculateTotalSpent(bookingRepo.rooms);
+          updateHeader("manager");
           generateReservations(currentUser.bookings);
         });
     });
@@ -260,12 +273,6 @@ function generateReservations(bookings) {
     </div>
     `;
   });
-}
-
-function updateBookings(allBookings, rooms, user) {
-  currentUser.getBookings(allBookings);
-  currentUser.calculateTotalSpent(rooms);
-  updateHeader(user);
 }
 
 function updateuserNameDisplay(user) {

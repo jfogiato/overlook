@@ -172,11 +172,13 @@ main {
   justify-content: space-evenly;
 }
 
-h2 {
-  color:#e3bc66;
-  text-shadow: 1px 1px 2px black;
+h2, h1, .date-selection > label {
+  color: #e3bc66;
+  text-shadow: 3px 2px 2px black;
   text-align: center;
 }
+
+
 
 .left-side-create, .right-side-booked {
   width: 50vw;
@@ -204,6 +206,10 @@ h2 {
 
 .date-selection > label, input, button {
   margin: 1vmin;
+}
+
+.date-selection > label {
+  font-size: larger;
 }
 
 .room-options {
