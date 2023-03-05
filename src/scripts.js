@@ -44,24 +44,9 @@ const roomDescriptions = {
   "suite": ["Slightly less posh with less stuff.", "./images/suite.png"],
   "junior suite": ["Like the regular suite, but more junior.", "./images/junior-suite.png"],
   "single room": ["You're broke and single too, huh?", "./images/single.png"]
-}
+};
 
 // EVENT LISTENERS 👂 -----------------------------------------------
-//  ---- * BELOW IS FUNCTIONAL WITHOUT LOGIN * ----
-// window.addEventListener("load", () => {
-//   apiObject.getAllData()
-//   .then(data => {
-//     currentUser = new User(data[0].customers[0]);
-//     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-//      currentUser.getBookings(bookingRepo.bookings);
-//      currentUser.calculateTotalSpent(bookingRepo.rooms);
-//      updateSpentRewardsHeader(currentUser);
-//     updateuserNameDisplay(currentUser);
-//     generateReservations(currentUser.bookings);
-//   })
-// })
-
-// ---- * BELOW IS FUNCTIONAL WITH LOGIN (FINAL PRODUCT) * ----
 window.addEventListener("load", () => {
   apiObject.getAllData()
   .then(data => {
@@ -70,7 +55,7 @@ window.addEventListener("load", () => {
 });
 
 loginForm.addEventListener("submit", e => {
-  e.preventDefault()
+  e.preventDefault();
 
   let userNameAttempt = userName.value;
   let passwordAttempt = password.value;
@@ -120,7 +105,7 @@ logoutButton.addEventListener("click", logout);
 
 filter.addEventListener("change", e => {
   e.preventDefault();
-  filterAvailableRooms(filter.value, bookingRepo.availableRooms)
+  filterAvailableRooms(filter.value, bookingRepo.availableRooms);
 });
 
 miniRoomCards.addEventListener("click", e => {
@@ -162,15 +147,8 @@ upcomingMinis.addEventListener('click', e => {
 });
 
 // FUNCTIONS ⚙️ -----------------------------------------------
-function logout() {
-  show(loginPage);
-  hide(header);
-  hide(main);
-}
-
 function bookRoom(room, user) {
   let date = convertDateDashes(searchDate.value);
-
   apiObject.apiRequest("POST", "bookings", user.id, date, room.number)
     .then(() => {
       apiObject.apiRequest("GET", "bookings")
@@ -228,11 +206,12 @@ function generateModal(roomList, roomNumber) {
     </section>
   `;
   if (bidet) {document.getElementById("modalRoomInfo").innerHTML += `
-  <div class="room-info-icons">
-    <span class="material-symbols-outlined">sprinkler</span>
-    <p tabindex="0">Bidet</p>
-  </div>
-  `;}
+    <div class="room-info-icons">
+      <span class="material-symbols-outlined">sprinkler</span>
+      <p tabindex="0">Bidet</p>
+    </div>
+    `;
+  }
   let bookButton = document.getElementById("bookButton");
   setTimeout(() => bookButton.focus());
   bookButton.addEventListener("click", () => {
@@ -251,7 +230,6 @@ function generateAvailableRooms(rooms) {
   if(rooms.length) {
     rooms.forEach(room => {
         let bed = room.numBeds > 1 ? "beds" : "bed";
-  
         miniRoomCards.innerHTML += `
         <div class="mini-room" id="${room.number}">
           <div class="mini-room-left">
@@ -272,10 +250,10 @@ function generateAvailableRooms(rooms) {
 function generateReservations(bookings) {
   let today = Date.now();
   let futureReservations = bookings.filter(booking => {
-    return Date.parse(booking.date) > today
+    return Date.parse(booking.date) > today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
   let pastReservations = bookings.filter(booking => {
-    return Date.parse(booking.date) < today
+    return Date.parse(booking.date) < today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   upcomingMinis.innerHTML = "";
@@ -310,15 +288,15 @@ function updateuserNameDisplay(user) {
 }
 
 function updateUserSpentHeader(user) {
-  userSpentHeader.innerText = `${user.name} has spent $${convertSpent(user.totalSpent)} at the Grand Budapest Hotel.`
+  userSpentHeader.innerText = `${user.name} has spent $${convertSpent(user.totalSpent)} at the Grand Budapest Hotel.`;
 }
 
 function updateSpentRewardsHeader(user) {
   if (user === "manager") {
-    let today = '2022/04/22' // convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
+    let today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
     let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
     let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
-    subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${Math.round(percentRoomsBooked * 100)}% full.`
+    subHeader.innerText = `Today's revenue is $${totalBookedToday}, and we are ${Math.round(percentRoomsBooked * 100)}% full.`;
   } else {
     let totalSpent = convertSpent(user.totalSpent);
     let totalRewards = user.totalRewards;
@@ -338,6 +316,12 @@ function successfulLogin() {
   hide(loginPage);
   show(header);
   show(main);
+}
+
+function logout() {
+  show(loginPage);
+  hide(header);
+  hide(main);
 }
 
 function unsuccessfulLogin(reason) {
@@ -371,3 +355,5 @@ function resetLoginForm() {
   userName.value = "";
   password.value = "";
 }
+
+;
