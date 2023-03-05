@@ -28,6 +28,7 @@ const reservationDate = document.getElementById("reservationDate");
 const loginForm = document.getElementById("loginForm");
 const userName = document.getElementById("userName");
 const password = document.getElementById("password");
+const logoutButton = document.getElementById("logoutButton");
 const userSearchForm = document.getElementById("userSearchForm");
 const userSearchValue = document.getElementById("userSearchValue");
 const searchButton = document.getElementById("searchButton");
@@ -115,6 +116,8 @@ searchButton.addEventListener("click", e => {
   }
 });
 
+logoutButton.addEventListener("click", logout);
+
 filter.addEventListener("change", e => {
   e.preventDefault();
   filterAvailableRooms(filter.value, bookingRepo.availableRooms)
@@ -159,6 +162,12 @@ upcomingMinis.addEventListener('click', e => {
 });
 
 // FUNCTIONS ⚙️ -----------------------------------------------
+function logout() {
+  show(loginPage);
+  hide(header);
+  hide(main);
+}
+
 function bookRoom(room, user) {
   let date = convertDateDashes(searchDate.value);
 
