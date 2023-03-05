@@ -122,13 +122,13 @@ filter.addEventListener("change", (e) => {
 
 miniRoomCards.addEventListener("click", (e) => {
   if (e.target.id !== "miniRoomCards") {
-    selectRoom(e);
+    triggerModal(e);
   }
 });
 
 miniRoomCards.addEventListener("keypress", (e) => {
   if (e.key === "Enter") {
-    selectRoom(e);
+    triggerModal(e);
   }
 });
 
@@ -210,15 +210,17 @@ function generateModal(roomList, roomNumber) {
         <p tabindex="0">${bidet}</p>
       </div>
       <p tabindex="0">${roomDescriptions[room.roomType][0]}</p>
-      <button id="bookButton">Book it!</button>
+      <button id="bookButton">Book it.</button>
     </section>
   `;
-  document.getElementById("bookButton").addEventListener("click", () => {
+  let bookButton = document.getElementById("bookButton");
+  setTimeout(() => bookButton.focus());
+  bookButton.addEventListener("click", () => {
     bookRoom(room, currentUser);
   });
 }
 
-function selectRoom(e) {
+function triggerModal(e) {
   let roomNumber = e.target.parentNode.parentNode.id;
   generateModal(bookingRepo.availableRooms, roomNumber);
   show(modalSection);
