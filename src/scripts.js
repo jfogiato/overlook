@@ -162,6 +162,8 @@ function bookRoom(room, user) {
           currentUser.calculateTotalSpent(bookingRepo.rooms);
           updateSpentRewardsHeader(currentUser);
           generateReservations(currentUser.bookings);
+          hide(modalSection);
+          generateAvailableRooms(bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value)));
         })
     })
 }
