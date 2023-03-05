@@ -53,7 +53,7 @@ const roomDescriptions = {
 //     bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
 //      currentUser.getBookings(bookingRepo.bookings);
 //      currentUser.calculateTotalSpent(bookingRepo.rooms);
-//      updateHeader(currentUser);
+//      updateSpentRewardsHeader(currentUser);
 //     updateuserNameDisplay(currentUser);
 //     generateReservations(currentUser.bookings);
 //   })
@@ -69,9 +69,9 @@ window.addEventListener("load", () => {
 
 loginForm.addEventListener("submit", (e) => {
   e.preventDefault()
+
   let userNameAttempt = userName.value;
   let passwordAttempt = password.value;
-
   let userNameString = userNameAttempt.split(/[0-9]/)[0];
   let userNumber = parseInt(userNameAttempt.match(/\d+/g));
   let isUser = (userNameString === 'customer' || userNameString === 'manager');
@@ -81,7 +81,7 @@ loginForm.addEventListener("submit", (e) => {
   let isValidUser = (userNameAttempt && isUser && isValidPassword);
 
   if (isValidUser && isManager) {
-    updateHeader(userNameAttempt);
+    updateSpentRewardsHeader(userNameAttempt);
     updateuserNameDisplay({name: 'Manager'});
     show(userSearchForm);
     successfulLogin();
@@ -91,7 +91,7 @@ loginForm.addEventListener("submit", (e) => {
         currentUser = new User(data);
         currentUser.getBookings(bookingRepo.bookings);
         currentUser.calculateTotalSpent(bookingRepo.rooms);
-        updateHeader(currentUser);
+        updateSpentRewardsHeader(currentUser);
         updateuserNameDisplay(currentUser);
         generateReservations(currentUser.bookings);
         successfulLogin();
@@ -148,12 +148,6 @@ upcomingMinis.addEventListener('click', (e) => {
   }
 });
 
-
-
-function updateBookings(allBookings, rooms, user) {
-
-}
-
 // FUNCTIONS ⚙️ -----------------------------------------------
 function bookRoom(room, user) {
   let date = convertDateDashes(searchDate.value);
@@ -165,7 +159,7 @@ function bookRoom(room, user) {
           bookingRepo.bookings = response.bookings.map(booking => new Booking(booking));
           currentUser.getBookings(bookingRepo.bookings);
           currentUser.calculateTotalSpent(bookingRepo.rooms);
-          updateHeader(currentUser);
+          updateSpentRewardsHeader(currentUser);
           generateReservations(currentUser.bookings);
         })
     })
@@ -179,7 +173,9 @@ function deleteBooking(id) {
           bookingRepo.bookings = data.bookings.map(booking => new Booking(booking));
           currentUser.getBookings(bookingRepo.bookings);
           currentUser.calculateTotalSpent(bookingRepo.rooms);
-          updateHeader("manager");
+          userNameDisplay.innerText === "Manager"
+            ? updateSpentRewardsHeader("manager")
+            : updateSpentRewardsHeader(currentUser);
           generateReservations(currentUser.bookings);
         });
     });
@@ -187,7 +183,6 @@ function deleteBooking(id) {
 
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
-
   let bed = room.numBeds > 1 ? "beds" : "bed";
   let multiplier = room.bedSize === "twin" ? 1 : 2;
   let bidet = room.bidet ? "Bidet" : "";
@@ -217,9 +212,7 @@ function filterAvailableRooms(type, rooms) {
 }
 
 function generateAvailableRooms(rooms) {
-
   miniRoomCards.innerHTML = "";
-  
   if(rooms.length) {
     rooms.forEach(room => {
         let bed = room.numBeds > 1 ? "beds" : "bed";
@@ -243,18 +236,15 @@ function generateAvailableRooms(rooms) {
 
 function generateReservations(bookings) {
   let today = Date.now();
-  
   let futureReservations = bookings.filter(booking => {
     return Date.parse(booking.date) > today
   });
-
   let pastReservations = bookings.filter(booking => {
     return Date.parse(booking.date) < today
   });
-  
+
   upcomingMinis.innerHTML = "";
   pastMinis.innerHTML = "";
-
   futureReservations.forEach(reservation => {
     upcomingMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.id}">
@@ -283,9 +273,8 @@ function updateUserSpentHeader(user) {
   userSpentHeader.innerText = `${user.name} has spent $${convertSpent(user.totalSpent)} at the Grand Budapest Hotel.`
 }
 
-function updateHeader(user) {
+function updateSpentRewardsHeader(user) {
   if (user === "manager") {
-    updateuserNameDisplay(user);
     let today = '2022/04/22' // convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
     let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
     let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
