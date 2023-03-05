@@ -68,7 +68,7 @@ window.addEventListener("load", () => {
   });
 });
 
-loginForm.addEventListener("submit", (e) => {
+loginForm.addEventListener("submit", e => {
   e.preventDefault()
 
   let userNameAttempt = userName.value;
@@ -106,7 +106,7 @@ loginForm.addEventListener("submit", (e) => {
 });
 
 // ----------------------------------------
-searchButton.addEventListener("click", (e) => {
+searchButton.addEventListener("click", e => {
   e.preventDefault();
   if (reservationDate.value) {
     let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
@@ -115,28 +115,28 @@ searchButton.addEventListener("click", (e) => {
   }
 });
 
-filter.addEventListener("change", (e) => {
+filter.addEventListener("change", e => {
   e.preventDefault();
   filterAvailableRooms(filter.value, bookingRepo.availableRooms)
 });
 
-miniRoomCards.addEventListener("click", (e) => {
+miniRoomCards.addEventListener("click", e => {
   if (e.target.id !== "miniRoomCards") {
     triggerModal(e);
   }
 });
 
-miniRoomCards.addEventListener("keypress", (e) => {
+miniRoomCards.addEventListener("keypress", e => {
   if (e.key === "Enter") {
     triggerModal(e);
   }
 });
 
-modalSection.addEventListener("click", (e) => {
+modalSection.addEventListener("click", e => {
   e.target.id === "modalSection" ? hide(modalSection) : null;
 });
 
-userSearchForm.addEventListener("submit", (e) => {
+userSearchForm.addEventListener("submit", e => {
   e.preventDefault();
   currentUser = bookingRepo.getUserInfo(userSearchValue.value);
   let userBookings = currentUser.getBookings(bookingRepo.bookings);
@@ -146,13 +146,13 @@ userSearchForm.addEventListener("submit", (e) => {
   show(userSpentHeader);
 });
 
-upcomingMinis.addEventListener('click', (e) => {
+upcomingMinis.addEventListener('click', e => {
   if (e.target.id !== 'upcomingMinis') {
     let currentMiniCard = e.target.parentNode;
     let deleteButton = currentMiniCard.children[1]
     hide(currentMiniCard.children[0]);
     show(currentMiniCard.children[1]);
-    deleteButton.addEventListener('click', (e) => {
+    deleteButton.addEventListener('click', e => {
       deleteBooking(currentMiniCard.id);
     });
   }
@@ -195,7 +195,7 @@ function deleteBooking(id) {
 
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
-  let bed = room.numBeds > 1 ? "beds" : "bed";
+  let bed = room.numBeds > 1 ? "s" : "";
   let multiplier = room.bedSize === "twin" ? 1 : 2;
   let bidet = room.bidet ? "Bidet" : "";
   
@@ -205,14 +205,25 @@ function generateModal(roomList, roomNumber) {
       <h3 tabindex="0">${room.roomType}</h3>
       <img src=${roomDescriptions[room.roomType][1]} alt="Hotel Room" tabindex="0">
       <div class="modal-room-info" id="modalRoomInfo">
-        <p tabindex="0">${room.numBeds * multiplier} People</p>
-        <p tabindex="0">${room.numBeds} ${room.bedSize} ${bed}</p>
-        <p tabindex="0">${bidet}</p>
+        <div class="room-info-icons">
+          <span class="material-symbols-outlined">person</span>
+          <p tabindex="0">${room.numBeds * multiplier}</p>
+        </div>
+        <div class="room-info-icons">
+          <span class="material-symbols-outlined">bed</span>
+          <p tabindex="0">${room.numBeds} ${room.bedSize}</p>
+        </div>
       </div>
       <p tabindex="0">${roomDescriptions[room.roomType][0]}</p>
       <button id="bookButton">Book it.</button>
     </section>
   `;
+  if (bidet) {document.getElementById("modalRoomInfo").innerHTML += `
+  <div class="room-info-icons">
+    <span class="material-symbols-outlined">sprinkler</span>
+    <p tabindex="0">Bidet</p>
+  </div>
+  `;}
   let bookButton = document.getElementById("bookButton");
   setTimeout(() => bookButton.focus());
   bookButton.addEventListener("click", () => {
