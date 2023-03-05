@@ -207,11 +207,6 @@ function generateModal(roomList, roomNumber) {
   });
 }
 
-function filterAvailableRooms(type, rooms) {
-  let filteredRooms = rooms.filter(room => room.roomType === type.toLowerCase());
-  generateAvailableRooms(filteredRooms);
-}
-
 function generateAvailableRooms(rooms) {
   miniRoomCards.innerHTML = "";
   if(rooms.length) {
@@ -239,10 +234,10 @@ function generateReservations(bookings) {
   let today = Date.now();
   let futureReservations = bookings.filter(booking => {
     return Date.parse(booking.date) > today
-  });
+  }).sort((a, b) => new Date(b.date) - new Date(a.date));
   let pastReservations = bookings.filter(booking => {
     return Date.parse(booking.date) < today
-  });
+  }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
   upcomingMinis.innerHTML = "";
   pastMinis.innerHTML = "";
@@ -264,6 +259,11 @@ function generateReservations(bookings) {
     </div>
     `;
   });
+}
+
+function filterAvailableRooms(type, rooms) {
+  let filteredRooms = rooms.filter(room => room.roomType === type.toLowerCase());
+  generateAvailableRooms(filteredRooms);
 }
 
 function updateuserNameDisplay(user) {
