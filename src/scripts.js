@@ -121,9 +121,15 @@ filter.addEventListener("change", (e) => {
 });
 
 miniRoomCards.addEventListener("click", (e) => {
-  let roomNumber = e.target.parentNode.parentNode.id;
-  generateModal(bookingRepo.availableRooms, roomNumber);
-  show(modalSection);
+  if (e.target.id !== "miniRoomCards") {
+    selectRoom(e);
+  }
+});
+
+miniRoomCards.addEventListener("keypress", (e) => {
+  if (e.key === "Enter") {
+    selectRoom(e);
+  }
 });
 
 modalSection.addEventListener("click", (e) => {
@@ -210,6 +216,12 @@ function generateModal(roomList, roomNumber) {
   document.getElementById("bookButton").addEventListener("click", () => {
     bookRoom(room, currentUser);
   });
+}
+
+function selectRoom(e) {
+  let roomNumber = e.target.parentNode.parentNode.id;
+  generateModal(bookingRepo.availableRooms, roomNumber);
+  show(modalSection);
 }
 
 function generateAvailableRooms(rooms) {
@@ -330,7 +342,7 @@ function convertSpent(stringNum) {
 }
 
 function showUserFetchError() {
-  alert(`We are so sorry! There has been an error. Please refresg the page and try logging in again.`);
+  alert(`We are so sorry! There has been an error. Please refresh the page and try logging in again.`);
 }
 
 function resetLoginForm() {
