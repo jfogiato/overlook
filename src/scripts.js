@@ -14,15 +14,14 @@ import BookingRepository from "./classes/BookingRepository";
 const loginPage = document.getElementById("loginPage");
 const loginErrorText = document.getElementById("loginErrorText");
 const header = document.querySelector("header");
-const main = document.querySelector("main");
 const userNameDisplay = document.getElementById("userNameDisplay");
 const subHeader = document.getElementById("subHeader");
 const userSpentHeader = document.getElementById("userSpentHeader");
+const main = document.querySelector("main");
 const modalSection = document.getElementById("modalSection");
 const miniRoomCards = document.getElementById("miniRoomCards");
 const upcomingMinis = document.getElementById("upcomingMinis");
 const pastMinis = document.getElementById("pastMinis");
-const reservationDate = document.getElementById("reservationDate");
 
 // DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢 ----------------------------------------
 const loginForm = document.getElementById("loginForm");
@@ -32,7 +31,7 @@ const logoutButton = document.getElementById("logoutButton");
 const userSearchForm = document.getElementById("userSearchForm");
 const userSearchValue = document.getElementById("userSearchValue");
 const searchButton = document.getElementById("searchButton");
-const searchDate = document.getElementById("reservationDate");
+const reservationDate = document.getElementById("reservationDate");
 const filterForm = document.getElementById("filterForm");
 const filter = document.getElementById("filters");
 
@@ -63,9 +62,9 @@ loginForm.addEventListener("submit", e => {
   let userNumber = parseInt(userNameAttempt.match(/\d+/g));
   let isUser = (userNameString === 'customer' || userNameString === 'manager');
   let isValidPassword = passwordAttempt === 'overlook2021';
-  let isValidUserNumber = (userNumber >= 1 && userNumber <= 50);
   let isManager = userName.value === 'manager';
-  let isValidUser = (userNameAttempt && isUser && isValidPassword);
+  let isValidUserNumber = isManager ? true : (userNumber >= 1 && userNumber <= 50);
+  let isValidUser = (userNameAttempt && isUser && isValidPassword && isValidUserNumber);
 
   if (!isValidPassword) {
     unsuccessfulLogin("password");
@@ -148,7 +147,7 @@ upcomingMinis.addEventListener('click', e => {
 
 // FUNCTIONS ⚙️ -----------------------------------------------
 function bookRoom(room, user) {
-  let date = convertDateDashes(searchDate.value);
+  let date = convertDateDashes(reservationDate.value);
   apiObject.apiRequest("POST", "bookings", user.id, date, room.number)
     .then(() => {
       apiObject.apiRequest("GET", "bookings")
