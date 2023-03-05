@@ -11,7 +11,7 @@
   <title>The Grand Budapest Hotel</title>
 </head>
 <body>
-  <section class="login-page" id="loginPage">
+  <section class="login-page hidden" id="loginPage">
     <img class="login-logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
     <form class="login-form" id="loginForm">
       <label for="userName">Username.</label>
@@ -22,7 +22,7 @@
     </form>
     <p class="login-error-text hidden" id="loginErrorText"></p>
   </section>
-  <header class="hidden">
+  <header class="">
     <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
     <section class="header-text">
       <h1 tabindex="0">Welcome, <span id="userNameDisplay">Name</span>.</h1>
@@ -35,7 +35,7 @@
       <button type="submit" id="searchUserButton">Go.</button>
     </form>
   </header>
-  <main class="hidden">
+  <main class="">
     <section class="modal-section hidden" id="modalSection">
       <!-- Room Modal inserted here -->
     </section>
