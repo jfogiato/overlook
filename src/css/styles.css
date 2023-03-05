@@ -8,9 +8,9 @@ button {
   border-radius: 3px;
   background-color: #510056;
   color: #e3bc66;
-  width: 16vmin;
-  height: 7vmin;
-  transition: background-color, font-size 1s;
+  width: 12vmin;
+  height: 4vmin;
+  transition: background-color 1s;
 }
 
 button:hover {
@@ -69,7 +69,7 @@ header {
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 4.5vmin;
+  top: 11.7vmin;
   right: 1vmin;
   align-items: center;
 }
@@ -78,6 +78,12 @@ header {
 input, button {
   width: 12vmin;
   margin: 0;
+}
+
+.logout-button {
+  position: fixed;
+  top: 0;
+  right: 1vmin;
 }
 
 main {
@@ -108,6 +114,14 @@ main {
   justify-content: flex-start;
   align-items: center;
   width: 100%;
+}
+
+.login-form > label,
+.filter-form > label,
+.date-selection > label {
+  background: #fcc3d38f;
+  padding: 0.3vmin;
+  border-radius: 5px;
 }
 
 .login-form > input {
@@ -210,8 +224,7 @@ main {
 }
 
 h2, 
-h1, 
-.date-selection > label {
+h1 {
   color: #e3bc66;
   text-shadow: 3px 2px 2px black;
   text-align: center;
@@ -336,6 +349,11 @@ h3 {
 
 .user-spent-header {
   font-size: large;
+  background: #ffdbe985;
+  border-radius: 6px;
+  text-shadow: none;
+  color: black;
+  padding: 0.7vmin;
 }
 
 .upcoming-reservations, 
