@@ -12,6 +12,7 @@ import BookingRepository from "./classes/BookingRepository";
 
 // DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
 const loginPage = document.getElementById("loginPage");
+const loginErrorText = document.getElementById("loginErrorText");
 const header = document.querySelector("header");
 const main = document.querySelector("main");
 const userNameDisplay = document.getElementById("userNameDisplay");
@@ -80,7 +81,11 @@ loginForm.addEventListener("submit", (e) => {
   let isManager = userName.value === 'manager';
   let isValidUser = (userNameAttempt && isUser && isValidPassword);
 
-  if (isValidUser && isManager) {
+  if (!isValidPassword) {
+    unsuccessfulLogin("password");
+  } else if (!isValidUser) {
+    unsuccessfulLogin("username");
+  } else if (isValidUser && isManager) {
     updateSpentRewardsHeader(userNameAttempt);
     updateuserNameDisplay({name: 'Manager'});
     show(userSearchForm);
@@ -96,10 +101,8 @@ loginForm.addEventListener("submit", (e) => {
         generateReservations(currentUser.bookings);
         successfulLogin();
       })
-      .catch(err => `do some stuff`) // add DOM handling here
-  } else {
-    alert("AHHHHHHHHHHHHHHHHHH")
-  }
+      .catch(err => showUserFetchError());
+  } 
 });
 
 // ----------------------------------------
@@ -303,10 +306,34 @@ function successfulLogin() {
   show(main);
 }
 
+function unsuccessfulLogin(reason) {
+  if (reason === "password") {
+    loginErrorText.innerText = "Please enter a valid password";
+  } else if (reason === "username") {
+    loginErrorText.innerText = "Please enter a valid username";
+  }
+  show(loginErrorText);
+  loginErrorText.classList.add("shake");
+  setTimeout(() => {
+    hide(loginErrorText);
+    resetLoginForm();
+    loginErrorText.innerText = "";
+  }, 1500);
+}
+
 function convertDateDashes(date) {
   return date.replace(/-/g, "/");
 }
 
 function convertSpent(stringNum) {
   return new Intl.NumberFormat().format(stringNum);
+}
+
+function showUserFetchError() {
+  alert(`We are so sorry! There has been an error. Please refresg the page and try logging in again.`);
+}
+
+function resetLoginForm() {
+  userName.value = "";
+  password.value = "";
 }
