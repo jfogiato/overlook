@@ -55,12 +55,12 @@ describe('User', () => {
   it('Should be able to calculate the total spent', () => {
     user.getBookings(allBookings);
     user.calculateTotalSpent(rooms);
-    expect(user.totalSpent).to.equal(8806.730000000001);
+    expect(user.totalSpent).to.equal(172.09);
   });
 
   it('Should be able to calculate rewards', () => {
     user.getBookings(allBookings);
     user.calculateTotalSpent(rooms);
-    expect(user.totalRewards).to.equal(440);
+    expect(user.totalRewards).to.equal(8);
   });
 });

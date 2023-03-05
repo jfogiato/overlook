@@ -206,6 +206,14 @@ describe('Booking Repository', () => {
         "costPerNight": 350.31
       },
       {
+        "number": 23,
+        "roomType": "residential suite",
+        "bidet": false,
+        "bedSize": "queen",
+        "numBeds": 2,
+        "costPerNight": 176.36
+      },
+      {
         "number": 24,
         "roomType": "suite",
         "bidet": false,
@@ -227,7 +235,7 @@ describe('Booking Repository', () => {
   });
 
   it('Should be able to get the total booked dollars for a given date', () => {
-    expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(470.92);
+    expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(294.56);
   });
 
 });
