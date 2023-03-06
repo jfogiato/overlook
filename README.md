@@ -1,101 +1,39 @@
-# Webpack Starter Kit
+# [Fig, Vacuum, Chew Toy (Rock, Paper, Scissors)](https://jfogiato.github.io/rock-paper-scissors/)
 
-## Clone This Repo
+## Abstract:
+[//]: <>
+I built a "Rock, Paper, Scissors" web app that allows users to select a token, a game mode, and a different fighter for each round. After their fighter is chosen, the computer randomly generates a choice and the winner is displayed. Users can also dynamically switch between game modes. Additionally, the app has `localStorage` enabled so even if a user exits the page they can save their scores.  
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
+## Installation Instructions:
+[//]: <> 
+1. Fork and clone [this repo](https://github.com/jfogiato/rock-paper-scissors)
+1. Copy the SSH key from the green "Code" button within the repo.
+1. In your terminal, use the command `git clone git@github.com:[the link to your repo]`.
+1. Open the repo in your text editor to make any changes or inspect code.
+1. Use `open index.html` to open the app in your browser.
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
+## Preview of App:
+[//]: <> 
+![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/57634618/212710572-a5c59331-9fc1-43c0-9971-065d747ede50.gif)
 
-Now try to commit something (just add a line in the README) and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+## Context:
+[//]: <> 
+This project was the final solo project of Mod 1 at Turing. The scope of the project was intentional in testing our ability to write Javascript, HTML, and CSS to build a fully functional application on our own. This project took about 10 hours to complete, and I completed all MVP functionality, as well as a handful of additional features to improve the UX.
 
-## Setup
+## Contributors:
+[//]: <> 
+[Joseph 'Joe' Fogiato](https://github.com/jfogiato)
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
+## Learning Goals:
+[//]: <> 
+The goal of this project was to write clean, DRY, SRP-driven Javascript, HTML, and CSS to build an application encompassing all that we learned throughout Mod 1.
 
-Then install the library dependencies. Run:
+## Wins + Challenges:
+[//]: <>
+I am very proud of the Javascript in this project. I abided by Single Responsibility Principle and wrote DRY code that is very readable, straight forward, and driven off of my Data Model. Additionally, I was able to contain all of my game-related functions within my `Game` and `Player` classes while keeping my `main.js` file strictly DOM manipulation. 
 
-```bash
-npm install
-```
+Outside of the Javascript, I also think that my HTML is minimal, semantic, and very legible. I kept `<div>`'s to a minimum and added comments where code was being inserted via JS. I prioritized developer empathy to make sure all of my naming conventions made sense and elements/classes/id's only existed if they were necessary.
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with the Turing logo image and a beautiful gradient background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
+The biggest challenge I had was in CSS. This language still feels the most unfamiliar to me, and while most of my code is decent, there were portions where I know I could improve and simplify. That being said, I am making concrete progress from project to project and am able to implement and troubleshoot CSS-related bugs more quickly each time. 
 
-## Where to Add Your Code
-
-### JavaScript
-
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
-
-**Create all of your feature code files in the `src` directory.**
-
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
-
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
-
-### HTML
-
-Add the HTML you need in the `index.html` file in the `./dist` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`scripts.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory.
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
-
-## Deploying to GitHub Pages
-
-_If you are finished with the functionality and testing of your project_, then you can consider deploying your project to the web! This way anyone can play it without cloning down your repo.
-
-[GitHub Pages](https://pages.github.com/) is a great way to deploy your project to the web. Don't worry about this until your project is free of bugs and well tested!
-
-If you _are_ done, you can follow [this procedure](./gh-pages-procedure.md) to get your project live on GitHub Pages.
-
-quick test
+One bug that I encountered could be summarized as: after a user clicks their choice, the `Player` choice and the `Computer` choice are displayed. When the choices were displayed, the user was still able to click on either icon which would trigger the event listener for the section and prematurely initiate another round. To fix this bug, I added an `.unclickable` class to my CSS with the property of `point-events: none;`, and added that class to the HTML I was inserting when the two icons were displayed. This class was then removed when the `generateFighters()` function was called. These ~3 lines of code fixed the bug elegantly and easily and but a nice bow on the project. 
