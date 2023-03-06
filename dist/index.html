@@ -7,19 +7,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
-  <title>Grand Budapest Hotel</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
+  <title>The Grand Budapest Hotel</title>
 </head>
 <body>
   <section class="login-page" id="loginPage">
     <img class="login-logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
     <form class="login-form" id="loginForm">
-      <label for="username"><b>Username.</b></label>
+      <label for="userName">Username.</label>
       <input type="text" placeholder="Enter Username." name="username" id ="userName" required>
-      <label for="password"><b>Password.</b></label>
+      <label for="password">Password.</label>
       <input type="password" placeholder="Enter Password." name="password"  id ="password" required>
       <button type="submit" id="loginButton">Login.</button>
-      <label>
     </form>
+    <p class="login-error-text hidden" id="loginErrorText"></p>
   </section>
   <header class="hidden">
     <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
@@ -27,7 +28,9 @@
       <h1 tabindex="0">Welcome, <span id="userNameDisplay">Name</span>.</h1>
       <h2 id="subHeader" tabindex="0"></h2>
     </section>
+    <button class="logout-button" id="logoutButton">Logout.</button>
     <form class="user-search-form hidden" id="userSearchForm">
+      <label for="userSearchValue" style="position: absolute; left: -100000px">User search.</label>
       <input id="userSearchValue" type="text" placeholder="User Search.">
       <button type="submit" id="searchUserButton">Go.</button>
     </form>

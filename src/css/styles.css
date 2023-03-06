@@ -1,35 +1,92 @@
-/* 
-#ffbdd8	(255,189,216)
-#dd0000	(221,0,0)
-#510056	(81,0,86)
-#a4d8ff	(164,216,255)
-#f9d1bc	(249,209,188)
-#e3bc66
-*/
-
 * {
   font-family: 'Sanchez', serif;
   margin: 0;
   text-align: center;
 }
 
-button {
-  border-radius: 3px;
-  background-color: #510056;
-  color: #e3bc66;
-  width: 16vmin;
-  height: 7vmin;
-}
-
-button:hover {
-  cursor: pointer;
-}
-
 html {
   width: 100vw;
   height: 100vh;
   top: 0;
-  background-color: #ffcbe1;
+  background-image: url("https://thumbs.dreamstime.com/b/pink-plastered-concrete-wall-texture-painted-built-structure-grungy-uneven-plaster-abstract-background-shabby-155634485.jpg");
+}
+
+.login-page {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.login-logo {
+  object-fit: contain;
+  height: 30vh;
+  margin: 1em;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+.login-form > label,
+.filter-form > label,
+.date-selection > label {
+  background: #fcc3d38f;
+  padding: 0.3vmin;
+  border-radius: 5px;
+}
+
+.login-form > input {
+  margin: 1vmin;
+  margin-bottom: 2vmin;
+  width: 15vmin;
+  text-align: center;
+}
+
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); }
+  10% { transform: translate(-1px, -2px) rotate(-1deg); }
+  20% { transform: translate(-3px, 0px) rotate(1deg); }
+  30% { transform: translate(3px, 2px) rotate(0deg); }
+  40% { transform: translate(1px, -1px) rotate(1deg); }
+  50% { transform: translate(-1px, 2px) rotate(-1deg); }
+  60% { transform: translate(-3px, 1px) rotate(0deg); }
+  70% { transform: translate(3px, 1px) rotate(-1deg); }
+  80% { transform: translate(-1px, -1px) rotate(1deg); }
+  90% { transform: translate(1px, 2px) rotate(0deg); }
+  100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.shake {
+  animation: shake 0.5s;
+}
+
+.login-error-text {
+  color: red;
+  font-size: large;
+  background: #d3d3d380;
+  padding: 0.5vmin;
+  border-radius: 20px;
+}
+
+button {
+  border-radius: 3px;
+  background-color: #510056;
+  color: #e3bc66;
+  width: 12vmin;
+  height: 4vmin;
+  transition: background-color 1s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #e3bc66;
+  color: #510056;
 }
 
 .logo {
@@ -69,14 +126,21 @@ header {
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 4.5vmin;
+  top: 11.7vmin;
   right: 1vmin;
   align-items: center;
 }
 
-.user-search-form > input, button {
+.user-search-form > 
+input, button {
   width: 12vmin;
   margin: 0;
+}
+
+.logout-button {
+  position: fixed;
+  top: 0;
+  right: 1vmin;
 }
 
 main {
@@ -85,37 +149,6 @@ main {
   margin-top: 20vh;
   display: flex;
   overflow: hidden;
-}
-
-.login-page {
-  background-color: #ffbdd8;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.login-logo {
-  object-fit: contain;
-  height: 30vh;
-  margin: 1em;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-}
-
-.login-form > input {
-  margin: 1vmin;
-  margin-bottom: 2vmin;
-  width: 15vmin;
-  text-align: center;
 }
 
 .modal-section {
@@ -153,14 +186,14 @@ main {
 
 .modal > img {
   width: 75%;
+  border-radius: 80px;
 }
 
 .modal > h3 {
   text-align: center;
   height: auto;
   margin-bottom: 2vh;
-  color: #e3bc66;
-  text-shadow: 1px 1px 2px black;
+  font-size: x-large;
 }
 
 .modal-room-info {
@@ -171,13 +204,26 @@ main {
   justify-content: space-evenly;
 }
 
-h2 {
-  color:#e3bc66;
-  text-shadow: 1px 1px 2px black;
+.room-info-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: auto;
+}
+
+.room-info-icons > p {
+  margin-left: .8vmin;
+}
+
+h2, 
+h1 {
+  color: #e3bc66;
+  text-shadow: 3px 2px 2px black;
   text-align: center;
 }
 
-.left-side-create, .right-side-booked {
+.left-side-create, 
+.right-side-booked {
   width: 50vw;
   height: 80vh;
   margin: 0;
@@ -201,8 +247,14 @@ h2 {
   align-items: center;
 }
 
-.date-selection > label, input, button {
+.date-selection > label, 
+input, 
+button {
   margin: 1vmin;
+}
+
+.date-selection > label {
+  font-size: larger;
 }
 
 .room-options {
@@ -233,12 +285,13 @@ h2 {
   cursor: pointer;
 }
 
-.filter-form > label, select {
+.filter-form > label, 
+select {
   margin: 1vmin;
 }
 
 .mini-room-cards {
-  height: 80%;
+  height: 81%;
   width: auto;
   margin: 0;
   margin-left: 1vmin;
@@ -248,7 +301,7 @@ h2 {
   justify-content: flex-start;
   align-items: center;
   border: 8px ridge #e3bc66;
-  background-color:#fda4c9;
+  background-color:#fcc3d3;
   box-shadow: 3px 2px 5px rgb(0 0 0);
 }
 
@@ -259,13 +312,13 @@ h2 {
   justify-content: space-between;
   align-items: center;
   margin: 1vh;
-  padding: 1vmin;
   border-radius: 4px;
   background-color: #ffffff2e;
   cursor: pointer;
 }
 
-.mini-room-left, .mini-room-right {
+.mini-room-left, 
+.mini-room-right {
   display: flex;
   flex-direction: column;
   width: 50%;
@@ -275,19 +328,26 @@ h2 {
 .mini-room-right > h3 {
   width: 100%;
   height: 100%;
-  text-align: right;
 }
 
-.mini-room-left > p, h3 {
+.mini-room-left > p, 
+h3 {
   text-transform: capitalize;
   height: 50%;
+  padding: 1vmin;
 }
 
 .user-spent-header {
   font-size: large;
+  background: #ffdbe985;
+  border-radius: 6px;
+  text-shadow: none;
+  color: black;
+  padding: 0.7vmin;
 }
 
-.upcoming-reservations, .past-reservations {
+.upcoming-reservations, 
+.past-reservations {
   height: 38%;
   width: 94%;
   margin: 0;
@@ -298,11 +358,12 @@ h2 {
   justify-content: flex-start;
   align-items: center;
   border: 8px ridge #e3bc66;
-  background-color:#fda4c9;
+  background-color:#fcc3d3;
   box-shadow: 3px 2px 5px rgb(0 0 0);
 }
 
-.past-minis, .upcoming-minis {
+.past-minis, 
+.upcoming-minis {
   width: 100%;
   height: 100%;
   padding: 0;
@@ -331,9 +392,137 @@ h2 {
   width: 50%;
   height: 100%;
   padding: 1vmin;
+}
+
+.upcoming-minis > .mini-room-booked > h3 {
+  width: 50%;
+  height: 100%;
+  padding: 1vmin;
   cursor: pointer;
 }
 
 .hidden {
   display: none;
+}
+
+@media only screen and (max-device-width: 600px) {
+
+  .login-page {
+    justify-content: center;
+  }
+
+  .login-logo {
+    height: 20vh;
+  }
+
+  button {
+    width: 40vmin;
+    height: 20vmin;
+  }
+
+
+  button:hover {
+    background-color: #e3bc66;
+    color: #510056;
+  }
+
+  .login-form > input {
+    width: 40vmin;
+    height: 7vmin;
+  }
+
+  header {
+    z-index: 2;
+    height: 40vmin;
+  }
+
+  .header-text {
+    width: 100%;
+    font-size: small;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo {
+    position: relative;
+    height: 15vmin;
+    margin: 2vmin;
+  }
+
+  .logout-button,
+  .user-search-form > button {
+    width: 20vmin;
+    height: 10vmin;
+  }
+
+  .user-search-form {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 1vmin;
+    left: 1vmin;
+    align-items: flex-start;
+    width: 26vmin;
+  }
+
+  .user-search-form > input {
+    width: 22vmin;
+  }
+
+  main {
+    z-index: 1;
+    width: 100vw;
+    height: 100vh;
+    margin-top: 22vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+  }
+
+  .left-side-create,
+  .right-side-booked {
+    width: 100vmin;
+  }
+
+  .right-side-booked {
+    margin-top: 20vmin;
+  }
+
+  .date-selection {
+    height: auto;
+  }
+
+  .date-selection > button {
+    height: 10vmin;
+  }
+
+  .mini-room-cards {
+    margin-left: 0;
+  }
+
+  .mini-room,
+  .mini-room-booked  {
+    width: 95%;
+  }
+
+  .upcoming-reservations, 
+  .past-reservations {
+    width: 97vmin;
+  }
+
+  .modal {
+    border-radius: 10px;
+    height: auto;
+  }
+
+  .modal > img {
+    width: 85%;
+    border-radius: 10px;
+  }
+
+
+  .hidden {
+    display: none;
+  }
 }
