@@ -90,7 +90,6 @@ loginForm.addEventListener("submit", e => {
   } 
 });
 
-// ----------------------------------------
 searchButton.addEventListener("click", e => {
   e.preventDefault();
   if (reservationDate.value) {
@@ -317,6 +316,12 @@ function successfulLogin() {
   hide(loginPage);
   show(header);
   show(main);
+  setFormDate();
+}
+
+function setFormDate() {
+  let today = new Date(Date.now()).toISOString().split("T")[0];
+  reservationDate.setAttribute("min", today);
 }
 
 function logout() {
