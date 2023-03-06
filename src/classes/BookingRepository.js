@@ -37,7 +37,7 @@ class BookingRepository {
           }
         });
       }
-      return acc
+      return acc;
     }, 0));
   }
 
