@@ -1,39 +1,75 @@
-# [Fig, Vacuum, Chew Toy (Rock, Paper, Scissors)](https://jfogiato.github.io/rock-paper-scissors/)
+# [The Grand Budapest Hotel EMS](https://jfogiato.github.io/)
+
+  
 
 ## Abstract:
+
 [//]: <>
-I built a "Rock, Paper, Scissors" web app that allows users to select a token, a game mode, and a different fighter for each round. After their fighter is chosen, the computer randomly generates a choice and the winner is displayed. Users can also dynamically switch between game modes. Additionally, the app has `localStorage` enabled so even if a user exits the page they can save their scores.  
+
+For the final solo project of Mod 2, I built an enterprise management software for the Grand Budapest Hotel. A user can log in and see a dashboard where they can select a date, view available rooms (with price, ameneties, etc), book a room, see their future and past bookings, delete future bookings, and see how much they've spent at the hotel. A manager can also log in and see a similar dashboard, but with the ability to search for a specific user,and book & delete rooms for that user.
+
 
 ## Installation Instructions:
-[//]: <> 
-1. Fork and clone [this repo](https://github.com/jfogiato/rock-paper-scissors)
-1. Copy the SSH key from the green "Code" button within the repo.
-1. In your terminal, use the command `git clone git@github.com:[the link to your repo]`.
+
+[//]: <>
+
+1. Fork and clone [this repo](https://github.com/jfogiato/overlook) and  [this repo (backend API)](https://github.com/turingschool-examples/overlook-api).
+
+1. Copy the SSH key from the green "Code" button within each repo.
+
+1. In your terminal, use the command `git clone git@github.com:[the link to each repo]`.
+
+1. Run `npm install` in both local repositories -- Do NOT run `npm audit fix --force` when prompted.
+
 1. Open the repo in your text editor to make any changes or inspect code.
-1. Use `open index.html` to open the app in your browser.
+
+1. Run `npm start` in your terminal for both repos.
+
+1. Copy and paste the generated `localServer` address that your terminal provides for the front end repo into your browser address bar.
+  
 
 ## Preview of App:
-[//]: <> 
-![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/57634618/212710572-a5c59331-9fc1-43c0-9971-065d747ede50.gif)
+
+[//]: <>
+![GBPH1-min](https://user-images.githubusercontent.com/57634618/223189791-4d69aa4b-3eb2-4ddc-96ab-ac799d844628.gif)
+
+![GBPH2-min](https://user-images.githubusercontent.com/57634618/223189847-9a8f6679-a8ad-46f0-b1a5-1d6a53aeeb8a.gif)
+
+![GBPH3-M-min](https://user-images.githubusercontent.com/57634618/223189857-3aedd269-d549-4fb8-94ee-eecc5a7b21ff.gif)
+ 
 
 ## Context:
-[//]: <> 
-This project was the final solo project of Mod 1 at Turing. The scope of the project was intentional in testing our ability to write Javascript, HTML, and CSS to build a fully functional application on our own. This project took about 10 hours to complete, and I completed all MVP functionality, as well as a handful of additional features to improve the UX.
+
+[//]: <>
+
+This project was the final solo project of Mod 2 at Turing. The scope of the project was intentional in testing our ability to write Javascript, HTML, and CSS to build a fully functional application on our own. Additionally, we incorporated a backend server and API's to GET, POST, and DELETE data. This project took about 25 hours to complete, and I completed all MVP functionality, as well as a handful of additional features to improve the UX.
+
 
 ## Contributors:
-[//]: <> 
+
+[//]: <>
+
 [Joseph 'Joe' Fogiato](https://github.com/jfogiato)
 
+  
 ## Learning Goals:
-[//]: <> 
-The goal of this project was to write clean, DRY, SRP-driven Javascript, HTML, and CSS to build an application encompassing all that we learned throughout Mod 1.
 
-## Wins + Challenges:
 [//]: <>
-I am very proud of the Javascript in this project. I abided by Single Responsibility Principle and wrote DRY code that is very readable, straight forward, and driven off of my Data Model. Additionally, I was able to contain all of my game-related functions within my `Game` and `Player` classes while keeping my `main.js` file strictly DOM manipulation. 
 
-Outside of the Javascript, I also think that my HTML is minimal, semantic, and very legible. I kept `<div>`'s to a minimum and added comments where code was being inserted via JS. I prioritized developer empathy to make sure all of my naming conventions made sense and elements/classes/id's only existed if they were necessary.
+The goals of this project were (1) use OOP to drive the design of the application and the code, (2) work with an API to send and receive data, (3) solidify the code review process, and (3) create a robust test suite that thoroughly tests all functionality of a client-side application.
 
-The biggest challenge I had was in CSS. This language still feels the most unfamiliar to me, and while most of my code is decent, there were portions where I know I could improve and simplify. That being said, I am making concrete progress from project to project and am able to implement and troubleshoot CSS-related bugs more quickly each time. 
+  
+## Wins + Challenges:
 
-One bug that I encountered could be summarized as: after a user clicks their choice, the `Player` choice and the `Computer` choice are displayed. When the choices were displayed, the user was still able to click on either icon which would trigger the event listener for the section and prematurely initiate another round. To fix this bug, I added an `.unclickable` class to my CSS with the property of `point-events: none;`, and added that class to the HTML I was inserting when the two icons were displayed. This class was then removed when the `generateFighters()` function was called. These ~3 lines of code fixed the bug elegantly and easily and but a nice bow on the project. 
+[//]: <>
+
+Overall, I am confident with my work on this project, and how the application turned out. I was able to wireframe a design, implement passing functionality, and implement about 70% of the styling within three days of being assigned project. I was then able to use the remaining time to add features that enhanced the user experience and made using the application more appealing and seamless. 
+
+I am very happy with the layout, readability, and versatility of my Javascript in this project. For both classes and DOM-related functions/methods, I prioritized SRP and DRY code, as well as utilizing parameters to enable code to be reused across different parts of the code base. 
+
+For login error handling, I utilized boolean variables that were assigned based off the user inputs, and then checked those variables in my conditional. This allowed my error handling for that portion to be much clearer and cleaner to someone who has to familiarize themselves with the codebase. 
+
+The last major win that I am proud of on this project was my `apirRequest` function. This function utilized a handful of parameters to able to GET, POST, and DELETE all from within the same function. 
+
+
+The major challenges I had on this project arose from switching between customer and manager views. Keeping track of which pieces of the dashboard should be visible, which data was being populated where, and ensuring functions were firing with the right arguments took a lot of trial and error and path testing.
