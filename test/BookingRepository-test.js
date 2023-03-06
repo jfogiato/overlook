@@ -238,4 +238,11 @@ describe('Booking Repository', () => {
     expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(295);
   });
 
+  it('Should be able find a user based on the username', () => {
+    let user = new User(users[0]);
+    expect(bookingRepo.getUserInfo('Leatha Ullrich')).to.deep.equal(user);
+    expect(bookingRepo.getUserInfo('Johnny Bravo')).to.equal(undefined);
+  });
+
+
 });

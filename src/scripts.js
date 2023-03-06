@@ -48,9 +48,9 @@ const roomDescriptions = {
 // EVENT LISTENERS 👂 -----------------------------------------------
 window.addEventListener("load", () => {
   apiObject.getAllData()
-  .then(data => {
-    bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
-  });
+    .then(data => {
+      bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
+    });
 });
 
 loginForm.addEventListener("submit", e => {
@@ -86,11 +86,10 @@ loginForm.addEventListener("submit", e => {
         generateReservations(currentUser.bookings);
         successfulLogin();
       })
-      .catch(err => showUserFetchError());
+      .catch(err => showUserFetchError(err));
   } 
 });
 
-// ----------------------------------------
 searchButton.addEventListener("click", e => {
   e.preventDefault();
   if (reservationDate.value) {
@@ -139,7 +138,7 @@ upcomingMinis.addEventListener('click', e => {
     let deleteButton = currentMiniCard.children[1]
     hide(currentMiniCard.children[0]);
     show(currentMiniCard.children[1]);
-    deleteButton.addEventListener('click', e => {
+    deleteButton.addEventListener('click', () => {
       deleteBooking(currentMiniCard.id);
     });
   }
@@ -156,8 +155,8 @@ function bookRoom(room, user) {
           currentUser.getBookings(bookingRepo.bookings);
           currentUser.calculateTotalSpent(bookingRepo.rooms);
           userNameDisplay.innerText === "Manager"
-          ? updateSpentRewardsHeader("manager")
-          : updateSpentRewardsHeader(currentUser);
+            ? updateSpentRewardsHeader("manager")
+            : updateSpentRewardsHeader(currentUser);
           generateReservations(currentUser.bookings);
           hide(modalSection);
           generateAvailableRooms(bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value)));
@@ -183,10 +182,8 @@ function deleteBooking(id) {
 
 function generateModal(roomList, roomNumber) {
   let room = roomList.find(room => room.number === parseInt(roomNumber));
-  let bed = room.numBeds > 1 ? "s" : "";
   let multiplier = room.bedSize === "twin" ? 1 : 2;
   let bidet = room.bidet ? "Bidet" : "";
-  
   modalSection.innerHTML = "";
   modalSection.innerHTML = `
     <section class="modal" id="modal">
@@ -206,7 +203,8 @@ function generateModal(roomList, roomNumber) {
       <button id="bookButton">Book it.</button>
     </section>
   `;
-  if (bidet) {document.getElementById("modalRoomInfo").innerHTML += `
+  if (bidet) {
+    document.getElementById("modalRoomInfo").innerHTML += `
     <div class="room-info-icons">
       <span class="material-symbols-outlined">sprinkler</span>
       <p tabindex="0">Bidet</p>
@@ -228,23 +226,23 @@ function triggerModal(e) {
 
 function generateAvailableRooms(rooms) {
   miniRoomCards.innerHTML = "";
-  if(rooms.length) {
+  if (rooms.length) {
     rooms.forEach(room => {
-        let bed = room.numBeds > 1 ? "beds" : "bed";
-        miniRoomCards.innerHTML += `
-        <div class="mini-room" id="${room.number}">
-          <div class="mini-room-left">
-            <h3 tabindex="0">${room.roomType}</h3>
-            <p tabindex="0">${room.numBeds} ${room.bedSize} ${bed}</p>
-          </div>
-          <div class="mini-room-right">
-            <h3 tabindex="0">$${room.costPerNight}/night</h3>
-          </div>
+      let bed = room.numBeds > 1 ? "beds" : "bed";
+      miniRoomCards.innerHTML += `
+      <div class="mini-room" id="${room.number}">
+        <div class="mini-room-left">
+          <h3 tabindex="0">${room.roomType}</h3>
+          <p tabindex="0">${room.numBeds} ${room.bedSize} ${bed}</p>
         </div>
-        `;
-      })
+        <div class="mini-room-right">
+          <h3 tabindex="0">$${room.costPerNight}/night</h3>
+        </div>
+      </div>
+      `;
+    })
   } else {
-    miniRoomCards.innerHTML = `<div class="sorry-message" tabindex="0">Hmpf. It appears that we do not have a room that matches your search. Please try a different search criteria.</div>`
+    miniRoomCards.innerHTML = `<div class="sorry-message" tabindex="0">Hmpf. It appears that we do not have a room that matches your search. Please try a different search criteria.</div>`;
   }
 }
 
@@ -267,7 +265,6 @@ function generateReservations(bookings) {
     </div>
     `;
   });
-
   pastMinis.innerHTML = "";
   pastReservations.forEach(reservation => {
     pastMinis.innerHTML += `
@@ -305,18 +302,16 @@ function updateSpentRewardsHeader(user) {
   }
 }
 
-function hide(element) {
-  element.classList.add("hidden");
-}
-
-function show(element) {
-  element.classList.remove("hidden");
-}
-
 function successfulLogin() {
   hide(loginPage);
   show(header);
   show(main);
+  setFormDate();
+}
+
+function setFormDate() {
+  let today = new Date(Date.now()).toISOString().split("T")[0];
+  reservationDate.setAttribute("min", today);
 }
 
 function logout() {
@@ -363,4 +358,10 @@ function resetLoginForm() {
   password.value = "";
 }
 
-;
+function hide(element) {
+  element.classList.add("hidden");
+}
+
+function show(element) {
+  element.classList.remove("hidden");
+}

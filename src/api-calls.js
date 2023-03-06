@@ -6,17 +6,14 @@ function apiRequest(request, path, userID, date, roomNumber) {
       "Content-Type": "application/json"
     }
   })
-  .then(response => {
-    if (response.ok) {
-      return response.json();
-    } else {
-      throw new Error(response.status);
-    }
-  })
-  .then(data => {
-    return data;
-  })
-  .catch(err => console.log(err));
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error(response.status);
+      }
+    })
+    .catch(err => console.log(err));
 }
 
 const getAllData = () => {
@@ -24,7 +21,7 @@ const getAllData = () => {
     apiRequest('GET', 'customers'),
     apiRequest('GET', 'rooms'),
     apiRequest('GET', 'bookings')
-  ])
+  ]);
 }
 
 export default { apiRequest, getAllData };
