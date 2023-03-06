@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sanchez&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,400,0,0" />
+  <title>The Grand Budapest Hotel</title>
+</head>
+<body>
+  <section class="login-page" id="loginPage">
+    <img class="login-logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
+    <form class="login-form" id="loginForm">
+      <label for="userName">Username.</label>
+      <input type="text" placeholder="Enter Username." name="username" id ="userName" required>
+      <label for="password">Password.</label>
+      <input type="password" placeholder="Enter Password." name="password"  id ="password" required>
+      <button type="submit" id="loginButton">Login.</button>
+    </form>
+    <p class="login-error-text hidden" id="loginErrorText"></p>
+  </section>
+  <header class="hidden">
+    <img class="logo" src="./images/hotel-logo.png" alt="Grand Budapest Hotel Logo" tabindex="0">
+    <section class="header-text">
+      <h1 tabindex="0">Welcome, <span id="userNameDisplay">Name</span>.</h1>
+      <h2 id="subHeader" tabindex="0"></h2>
+    </section>
+    <button class="logout-button" id="logoutButton">Logout.</button>
+    <form class="user-search-form hidden" id="userSearchForm">
+      <label for="userSearchValue" style="position: absolute; left: -100000px">User search.</label>
+      <input id="userSearchValue" type="text" placeholder="User Search.">
+      <button type="submit" id="searchUserButton">Go.</button>
+    </form>
+  </header>
+  <main class="hidden">
+    <section class="modal-section hidden" id="modalSection">
+      <!-- Room Modal inserted here -->
+    </section>
+    <aside class="left-side-create">
+      <form class="date-selection">
+        <label for="reservationDate" tabindex="0">Make a new reservation.</label>
+        <input type="date" min="1900-01-01" id="reservationDate" name="reservation-date" class="reservation-date" tabindex="0"> 
+        <button type="submit" id="searchButton" tabindex="0">Search.</button>
+      </form>
+      <section class="room-options">
+        <form class="filter-form hidden" id="filterForm">
+          <label for="filters" tabindex="0">Filter available rooms.</label>
+          <select name="filter-rooms" class ="filters" id="filters" tabindex="0">
+            <option id="filterPlaceholder" value="" disabled selected>Select a room type.</option>
+            <option value="Residential Suite">Residential Suite</option>
+            <option value="Suite">Suite</option>
+            <option value="Junior Suite">Junior Suite</option>
+            <option value="Single Room">Single Room</option>
+          </select>
+        </form>
+        <section class="mini-room-cards" id="miniRoomCards">
+          <!-- Available rooms go here! -->
+        </section>
+      </section>
+    </aside>
+    <aside class="right-side-booked">
+      <h2 class="user-spent-header" id="userSpentHeader"></h2>
+      <h2 tabindex="0">Upcoming reservations.</h2>
+      <section class="upcoming-reservations">
+        <section class="upcoming-minis" id="upcomingMinis">
+         <!-- Future reservations go here! -->
+        </section>
+      </section>
+      <h2 tabindex="0">Past reservations.</h2>
+      <section class="past-reservations">
+        <section class="past-minis" id="pastMinis">
+         <!-- Past reservations go here! -->
+        </section>
+      </section>
+    </aside>
+  </main>
+  <script src="bundle.js"></script>
+</body>
+</html>
