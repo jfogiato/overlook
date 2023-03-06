@@ -325,8 +325,10 @@ function logout() {
   hide(main);
   hide(userSearchForm);
   hide(userSpentHeader);
+  hide(filterForm)
   upcomingMinis.innerHTML = "";
   pastMinis.innerHTML = "";
+  miniRoomCards.innerHTML = "";
 }
 
 function unsuccessfulLogin(reason) {
