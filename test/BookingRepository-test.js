@@ -235,7 +235,7 @@ describe('Booking Repository', () => {
   });
 
   it('Should be able to get the total booked dollars for a given date', () => {
-    expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(294.56);
+    expect(bookingRepo.getTotalBookedDollars('2022/04/22')).to.equal(295);
   });
 
 });

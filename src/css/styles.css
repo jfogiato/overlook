@@ -87,12 +87,6 @@ button:hover {
   cursor: pointer;
   background-color: #e3bc66;
   color: #510056;
-  font-size: large;
-}
-
-button:focus,
-button:active {
-  font-size: x-small;
 }
 
 .logo {
