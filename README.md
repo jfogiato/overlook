@@ -26,6 +26,8 @@ For the final solo project of Mod 2, I built an enterprise management software f
 1. Run `npm start` in your terminal for both repos.
 
 1. Copy and paste the generated `localServer` address that your terminal provides for the front end repo into your browser address bar.
+
+1. Use a username of "customerXX" where XX is a number between 1 & 50, or use "manager" to see the manager view. Password is "overlook2021" for both. Note - if a single digit, do not include a 0. eg ✅"1" vs ❌"01".
   
 
 ## Preview of App:
