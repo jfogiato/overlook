@@ -11,6 +11,7 @@ import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
 // DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
+const errorPage = document.getElementById("errorPage");
 const loginPage = document.getElementById("loginPage");
 const loginErrorText = document.getElementById("loginErrorText");
 const header = document.querySelector("header");
@@ -86,7 +87,7 @@ loginForm.addEventListener("submit", e => {
         generateReservations(currentUser.bookings);
         successfulLogin();
       })
-      .catch(err => showUserFetchError(err));
+      .catch( () => showUserFetchError());
   } 
 });
 
@@ -163,7 +164,9 @@ function bookRoom(room, user) {
           hide(modalSection);
           generateAvailableRooms(bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value)));
         })
+        .catch( () => showUserFetchError());
     })
+    .catch( () => showUserFetchError());
 }
 
 function deleteBooking(id) {
@@ -178,8 +181,10 @@ function deleteBooking(id) {
             ? updateSpentRewardsHeader("manager")
             : updateSpentRewardsHeader(currentUser);
           generateReservations(currentUser.bookings);
-        });
-    });
+        })
+        .catch( () => showUserFetchError());
+    })
+    .catch( () => showUserFetchError());
 }
 
 function generateModal(roomList, roomNumber) {
@@ -352,7 +357,8 @@ function convertSpent(stringNum) {
 }
 
 function showUserFetchError() {
-  alert(`We are so sorry! There has been an error. Please refresh the page and try logging in again.`);
+  hide(loginPage);
+  show(errorPage);
 }
 
 function showUserSearchError() {

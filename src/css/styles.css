@@ -11,6 +11,26 @@ html {
   background-image: url("https://thumbs.dreamstime.com/b/pink-plastered-concrete-wall-texture-painted-built-structure-grungy-uneven-plaster-abstract-background-shabby-155634485.jpg");
 }
 
+.error-page {
+  height: 100vmin;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-image: url(https://images-prod.dazeddigital.com/786/azure/dazed-prod/1120/5/1125152.jpg);
+  background-size: cover;
+  align-items: flex-start;
+}
+
+.error-page > p {
+  margin-top: 5vmin;
+  font-size: xx-large;
+  color: red;
+  background: #ffffff8f;
+  width: 50%;
+  padding: 5vmin;
+  border-radius: 25px;
+}
+
 .login-page {
   height: 100vh;
   width: 100%;
