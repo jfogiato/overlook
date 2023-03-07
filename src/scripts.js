@@ -11,6 +11,7 @@ import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
 // DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
+const instructionsPage = document.getElementById("userInstructionsPage");
 const errorPage = document.getElementById("errorPage");
 const loginPage = document.getElementById("loginPage");
 const loginErrorText = document.getElementById("loginErrorText");
@@ -25,6 +26,7 @@ const upcomingMinis = document.getElementById("upcomingMinis");
 const pastMinis = document.getElementById("pastMinis");
 
 // DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢 ----------------------------------------
+const instructionsButton = document.getElementById("instructionsButton");
 const loginForm = document.getElementById("loginForm");
 const userName = document.getElementById("userName");
 const password = document.getElementById("password");
@@ -37,11 +39,10 @@ const filterForm = document.getElementById("filterForm");
 const filter = document.getElementById("filters");
 
 // GLOBAL VARIABLES 🌍 -----------------------------------------------
-let currentUser;
-let bookingRepo;
+let currentUser, bookingRepo;
 const roomDescriptions = {
-  "residential suite": ["Very posh suite with stuff.", "./images/residential-suite.png"],
-  "suite": ["Slightly less posh with less stuff.", "./images/suite.png"],
+  "residential suite": ["Very posh suite with fancy stuff.", "./images/residential-suite.png"],
+  "suite": ["Slightly less posh with less fancy stuff.", "./images/suite.png"],
   "junior suite": ["Like the regular suite, but more junior.", "./images/junior-suite.png"],
   "single room": ["You're broke and single too, huh?", "./images/single.png"]
 };
@@ -52,6 +53,10 @@ window.addEventListener("load", () => {
     .then(data => {
       bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
     });
+});
+
+instructionsButton.addEventListener("click", () => {
+  hide(instructionsPage);
 });
 
 loginForm.addEventListener("submit", e => {
