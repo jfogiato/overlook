@@ -37,11 +37,10 @@ const filterForm = document.getElementById("filterForm");
 const filter = document.getElementById("filters");
 
 // GLOBAL VARIABLES 🌍 -----------------------------------------------
-let currentUser;
-let bookingRepo;
+let currentUser, bookingRepo;
 const roomDescriptions = {
-  "residential suite": ["Very posh suite with stuff.", "./images/residential-suite.png"],
-  "suite": ["Slightly less posh with less stuff.", "./images/suite.png"],
+  "residential suite": ["Very posh suite with fancy stuff.", "./images/residential-suite.png"],
+  "suite": ["Slightly less posh with less fancy stuff.", "./images/suite.png"],
   "junior suite": ["Like the regular suite, but more junior.", "./images/junior-suite.png"],
   "single room": ["You're broke and single too, huh?", "./images/single.png"]
 };

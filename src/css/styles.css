@@ -31,6 +31,46 @@ html {
   border-radius: 25px;
 }
 
+.user-instructions-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  background-color: rgba(0 0 0 / 40%);
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  position: fixed;
+  overflow: hidden;
+}
+
+.instructions-background {
+  height: 50vmin;
+  width: 50vmin;
+  background-color: #ffdbe9;
+  margin-top: 3vmin;
+  overflow: auto;
+  padding: 2vmin;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  border-radius: 150px;
+}
+
+.instructions-username {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.instructions-password {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .login-page {
   height: 100vh;
   width: 100%;
