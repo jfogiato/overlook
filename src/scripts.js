@@ -50,45 +50,17 @@ const roomDescriptions = {
 window.addEventListener("load", () => {
   apiObject.getAllData()
     .then(data => {
+      console.log(data)
+      currentUser = new User(data[0].customers[0]);
       bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
+      currentUser.getBookings(bookingRepo.bookings);
+      currentUser.calculateTotalSpent(bookingRepo.rooms);
+      updateSpentRewardsHeader(currentUser);
+      updateuserNameDisplay(currentUser);
+      generateReservations(currentUser.bookings);
+      generateReservations(currentUser.bookings);
+      successfulLogin();
     });
-});
-
-loginForm.addEventListener("submit", e => {
-  e.preventDefault();
-
-  let userNameAttempt = userName.value;
-  let passwordAttempt = password.value;
-  let userNameString = userNameAttempt.split(/[0-9]/)[0];
-  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
-  let isUser = (userNameString === 'customer' || userNameString === 'manager');
-  let isValidPassword = passwordAttempt === 'overlook2021';
-  let isManager = userName.value === 'manager';
-  let isValidUserNumber = isManager ? true : (userNumber >= 1 && userNumber <= 50);
-  let isValidUser = (userNameAttempt && isUser && isValidPassword && isValidUserNumber);
-
-  if (!isValidPassword) {
-    unsuccessfulLogin("password");
-  } else if (!isValidUser) {
-    unsuccessfulLogin("username");
-  } else if (isValidUser && isManager) {
-    updateSpentRewardsHeader(userNameAttempt);
-    updateuserNameDisplay({name: 'Manager'});
-    show(userSearchForm);
-    successfulLogin();
-  } else if (isValidUser && isValidUserNumber) {
-    apiObject.apiRequest("GET", `customers/${userNumber}`)
-      .then(data => {
-        currentUser = new User(data);
-        currentUser.getBookings(bookingRepo.bookings);
-        currentUser.calculateTotalSpent(bookingRepo.rooms);
-        updateSpentRewardsHeader(currentUser);
-        updateuserNameDisplay(currentUser);
-        generateReservations(currentUser.bookings);
-        successfulLogin();
-      })
-      .catch( () => showUserFetchError());
-  } 
 });
 
 searchButton.addEventListener("click", e => {
