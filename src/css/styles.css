@@ -467,6 +467,13 @@ h3 {
 
 @media only screen and (max-device-width: 600px) {
 
+  .instructions-background {
+    height: 93vmin;
+    width: 93vmin;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
   .login-page {
     justify-content: center;
   }

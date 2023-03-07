@@ -11,6 +11,7 @@ import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
 // DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
+const instructionsPage = document.getElementById("userInstructionsPage");
 const errorPage = document.getElementById("errorPage");
 const loginPage = document.getElementById("loginPage");
 const loginErrorText = document.getElementById("loginErrorText");
@@ -25,6 +26,7 @@ const upcomingMinis = document.getElementById("upcomingMinis");
 const pastMinis = document.getElementById("pastMinis");
 
 // DOM VARIABLES - BUTTONS AND INPUTS 🔠 🔢 ----------------------------------------
+const instructionsButton = document.getElementById("instructionsButton");
 const loginForm = document.getElementById("loginForm");
 const userName = document.getElementById("userName");
 const password = document.getElementById("password");
@@ -51,6 +53,10 @@ window.addEventListener("load", () => {
     .then(data => {
       bookingRepo = new BookingRepository(data[2].bookings, data[1].rooms, data[0].customers);
     });
+});
+
+instructionsButton.addEventListener("click", () => {
+  hide(instructionsPage);
 });
 
 loginForm.addEventListener("submit", e => {
