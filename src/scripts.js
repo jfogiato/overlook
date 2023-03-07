@@ -96,6 +96,8 @@ searchButton.addEventListener("click", e => {
     let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
     generateAvailableRooms(availableRooms);
     show(filterForm);
+  } else {
+    showUserSearchError();
   }
 });
 
@@ -351,6 +353,11 @@ function convertSpent(stringNum) {
 
 function showUserFetchError() {
   alert(`We are so sorry! There has been an error. Please refresh the page and try logging in again.`);
+}
+
+function showUserSearchError() {
+  miniRoomCards.innerHTML = `<div class="sorry-message" tabindex="0">Please select a date to show available rooms.</div>`;
+  setTimeout(() => miniRoomCards.innerHTML = "", 1500);
 }
 
 function resetLoginForm() {
