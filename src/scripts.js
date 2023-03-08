@@ -55,10 +55,6 @@ window.addEventListener("load", () => {
     });
 });
 
-instructionsButton.addEventListener("click", () => {
-  hide(instructionsPage);
-});
-
 loginForm.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -340,9 +336,9 @@ function logout() {
 
 function unsuccessfulLogin(reason) {
   if (reason === "password") {
-    loginErrorText.innerText = "Please enter a valid password";
+    loginErrorText.innerText = `Password should be "overlook2021".`;
   } else if (reason === "username") {
-    loginErrorText.innerText = "Please enter a valid username";
+    loginErrorText.innerText = `Please enter a valid username starting with "customer" and ending with 1-50. eg "customer1", "customer7", "customer25"`;
   }
   show(loginErrorText);
   loginErrorText.classList.add("shake");
@@ -350,7 +346,7 @@ function unsuccessfulLogin(reason) {
     hide(loginErrorText);
     resetLoginForm();
     loginErrorText.innerText = "";
-  }, 1000);
+  }, 5000);
 }
 
 function convertDateDashes(date) {
