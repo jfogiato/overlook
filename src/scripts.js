@@ -136,13 +136,14 @@ userSearchForm.addEventListener("submit", e => {
   show(userSpentHeader);
 });
 
-upcomingMinis.addEventListener('click', e => {
-  if (e.target.id !== 'upcomingMinis') {
+upcomingMinis.addEventListener("click", e => {
+  if (e.target.id !== "upcomingMinis" && e.target.id !== "deleteReservation") {
     let currentMiniCard = e.target.parentNode;
-    let deleteButton = currentMiniCard.children[1]
+    let deleteButton = currentMiniCard.children[2]
     hide(currentMiniCard.children[0]);
-    show(currentMiniCard.children[1]);
-    deleteButton.addEventListener('click', () => {
+    hide(currentMiniCard.children[1]);
+    show(currentMiniCard.children[2]);
+    deleteButton.addEventListener("click", () => {
       deleteBooking(currentMiniCard.id);
     });
   }
@@ -268,8 +269,8 @@ function generateReservations(bookings) {
     upcomingMinis.innerHTML += `
     <div class="mini-room-booked" id="${reservation.id}">
       <h3 tabindex="0">Room ${reservation.roomNumber}</h3>
-      <button class="delete-reservation hidden"id="deleteReservation">Delete.</button>
       <h3 tabindex="0">${reservation.date}</h3>
+      <button class="delete-reservation hidden"id="deleteReservation">Delete.</button>
     </div>
     `;
   });

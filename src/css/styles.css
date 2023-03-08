@@ -405,7 +405,8 @@ h3 {
 
 .delete-reservation {
   height: auto;
-  margin-right: 28%;
+  margin-right: 37%;
+  margin-left: 36%;
 }
 
 .mini-room-booked > h3 {
