@@ -438,14 +438,14 @@ h3 {
   display: flex;
   width: 80%;
   margin: 1vmin;
-  justify-content: space-evenly;
+  justify-content: space-between;
   border-radius: 4px;
   background-color: #ffffff2e;
 }
 
 .delete-reservation {
   height: auto;
-  width: auto;
+  margin-right: 28%;
 }
 
 .mini-room-booked > h3 {
