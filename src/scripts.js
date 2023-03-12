@@ -95,7 +95,7 @@ loginForm.addEventListener("submit", e => {
 searchButton.addEventListener("click", e => {
   e.preventDefault();
   if (reservationDate.value) {
-    let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
+    const availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
     generateAvailableRooms(availableRooms);
     show(filterForm);
   } else {
