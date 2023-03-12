@@ -58,15 +58,15 @@ window.addEventListener("load", () => {
 loginForm.addEventListener("submit", e => {
   e.preventDefault();
 
-  let userNameAttempt = userName.value;
-  let passwordAttempt = password.value;
-  let userNameString = userNameAttempt.split(/[0-9]/)[0];
-  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
-  let isUser = (userNameString === 'customer' || userNameString === 'manager');
-  let isValidPassword = passwordAttempt === 'overlook2021';
-  let isManager = userName.value === 'manager';
-  let isValidUserNumber = isManager ? true : (userNumber >= 1 && userNumber <= 50);
-  let isValidUser = (userNameAttempt && isUser && isValidPassword && isValidUserNumber);
+  const userNameAttempt = userName.value;
+  const passwordAttempt = password.value;
+  const userNameString = userNameAttempt.split(/[0-9]/)[0];
+  const userNumber = parseInt(userNameAttempt.match(/\d+/g));
+  const isUser = (userNameString === 'customer' || userNameString === 'manager');
+  const isValidPassword = passwordAttempt === 'overlook2021';
+  const isManager = userName.value === 'manager';
+  const isValidUserNumber = isManager ? true : (userNumber >= 1 && userNumber <= 50);
+  const isValidUser = (userNameAttempt && isUser && isValidPassword && isValidUserNumber);
 
   if (!isValidPassword) {
     unsuccessfulLogin("password");
