@@ -11,7 +11,7 @@ class BookingRepository {
   }
 
   getAvailableRooms(date) {
-    let unavailableRooms = this.bookings.reduce((acc, booking) => {
+    const unavailableRooms = this.bookings.reduce((acc, booking) => {
       if (booking.date === date) {
         acc.push(booking.roomNumber);
       }
