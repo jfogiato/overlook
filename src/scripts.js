@@ -138,8 +138,8 @@ userSearchForm.addEventListener("submit", e => {
 
 upcomingMinis.addEventListener("click", e => {
   if (e.target.id !== "upcomingMinis" && e.target.id !== "deleteReservation") {
-    let currentMiniCard = e.target.parentNode;
-    let deleteButton = currentMiniCard.children[2]
+    const currentMiniCard = e.target.parentNode;
+    const deleteButton = currentMiniCard.children[2]
     hide(currentMiniCard.children[0]);
     hide(currentMiniCard.children[1]);
     show(currentMiniCard.children[2]);
