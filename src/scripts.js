@@ -129,7 +129,7 @@ modalSection.addEventListener("click", e => {
 userSearchForm.addEventListener("submit", e => {
   e.preventDefault();
   currentUser = bookingRepo.getUserInfo(userSearchValue.value);
-  let userBookings = currentUser.getBookings(bookingRepo.bookings);
+  const userBookings = currentUser.getBookings(bookingRepo.bookings);
   generateReservations(userBookings);
   currentUser.calculateTotalSpent(bookingRepo.rooms);
   updateUserSpentHeader(currentUser);
