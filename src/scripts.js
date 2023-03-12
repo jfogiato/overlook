@@ -1,4 +1,4 @@
-// IMPORTS 📥 -----------------------------------------------
+// IMPORTS -----------------------------------------------
 import "./css/styles.css";
 import "./images/hotel-logo.png";
 import "./images/single.png";
@@ -10,7 +10,7 @@ import Booking from "./classes/Booking";
 import apiObject from "./api-calls";
 import BookingRepository from "./classes/BookingRepository";
 
-// DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
+// DOM VARIABLES - ELEMENTS  -----------------------------------------------
 const instructionsPage = document.getElementById("userInstructionsPage");
 const errorPage = document.getElementById("errorPage");
 const loginPage = document.getElementById("loginPage");
@@ -38,7 +38,7 @@ const reservationDate = document.getElementById("reservationDate");
 const filterForm = document.getElementById("filterForm");
 const filter = document.getElementById("filters");
 
-// GLOBAL VARIABLES 🌍 -----------------------------------------------
+// GLOBAL VARIABLES  -----------------------------------------------
 let currentUser, bookingRepo;
 const roomDescriptions = {
   "residential suite": ["Very posh suite with fancy stuff.", "./images/residential-suite.png"],
@@ -47,7 +47,7 @@ const roomDescriptions = {
   "single room": ["You're broke and single too, huh?", "./images/single.png"]
 };
 
-// EVENT LISTENERS 👂 -----------------------------------------------
+// EVENT LISTENERS  -----------------------------------------------
 window.addEventListener("load", () => {
   apiObject.getAllData()
     .then(data => {
@@ -149,7 +149,7 @@ upcomingMinis.addEventListener("click", e => {
   }
 });
 
-// FUNCTIONS ⚙️ -----------------------------------------------
+// FUNCTIONS  -----------------------------------------------
 function bookRoom(room, user) {
   let date = convertDateDashes(reservationDate.value);
   apiObject.apiRequest("POST", "bookings", user.id, date, room.number)
