@@ -151,7 +151,7 @@ upcomingMinis.addEventListener("click", e => {
 
 // FUNCTIONS  -----------------------------------------------
 function bookRoom(room, user) {
-  let date = convertDateDashes(reservationDate.value);
+  const date = convertDateDashes(reservationDate.value);
   apiObject.apiRequest("POST", "bookings", user.id, date, room.number)
     .then(() => {
       apiObject.apiRequest("GET", "bookings")
@@ -190,9 +190,9 @@ function deleteBooking(id) {
 }
 
 function generateModal(roomList, roomNumber) {
-  let room = roomList.find(room => room.number === parseInt(roomNumber));
-  let multiplier = room.bedSize === "twin" ? 1 : 2;
-  let bidet = room.bidet ? "Bidet" : "";
+  const room = roomList.find(room => room.number === parseInt(roomNumber));
+  const multiplier = room.bedSize === "twin" ? 1 : 2;
+  const bidet = room.bidet ? "Bidet" : "";
   modalSection.innerHTML = "";
   modalSection.innerHTML = `
     <section class="modal" id="modal">
@@ -220,7 +220,7 @@ function generateModal(roomList, roomNumber) {
     </div>
     `;
   }
-  let bookButton = document.getElementById("bookButton");
+  const bookButton = document.getElementById("bookButton");
   setTimeout(() => bookButton.focus());
   bookButton.addEventListener("click", () => {
     bookRoom(room, currentUser);
@@ -228,7 +228,7 @@ function generateModal(roomList, roomNumber) {
 }
 
 function triggerModal(e) {
-  let roomNumber = e.target.parentNode.parentNode.id;
+  const roomNumber = e.target.parentNode.parentNode.id;
   generateModal(bookingRepo.availableRooms, roomNumber);
   show(modalSection);
 }
@@ -237,7 +237,7 @@ function generateAvailableRooms(rooms) {
   miniRoomCards.innerHTML = "";
   if (rooms.length) {
     rooms.forEach(room => {
-      let bed = room.numBeds > 1 ? "beds" : "bed";
+      const bed = room.numBeds > 1 ? "beds" : "bed";
       miniRoomCards.innerHTML += `
       <div class="mini-room" id="${room.number}">
         <div class="mini-room-left">
@@ -256,11 +256,11 @@ function generateAvailableRooms(rooms) {
 }
 
 function generateReservations(bookings) {
-  let today = Date.now() - 86400000;
-  let futureReservations = bookings.filter(booking => {
+  const today = Date.now() - 86400000;
+  const futureReservations = bookings.filter(booking => {
     return Date.parse(booking.date) > today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
-  let pastReservations = bookings.filter(booking => {
+  const pastReservations = bookings.filter(booking => {
     return Date.parse(booking.date) < today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -286,7 +286,7 @@ function generateReservations(bookings) {
 }
 
 function filterAvailableRooms(type, rooms) {
-  let filteredRooms = rooms.filter(room => room.roomType === type.toLowerCase());
+  const filteredRooms = rooms.filter(room => room.roomType === type.toLowerCase());
   generateAvailableRooms(filteredRooms);
 }
 
@@ -300,13 +300,13 @@ function updateUserSpentHeader(user) {
 
 function updateSpentRewardsHeader(user) {
   if (user === "manager") {
-    let today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
-    let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
-    let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
+    const today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
+    const totalBookedToday = bookingRepo.getTotalBookedDollars(today);
+    const percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
     subHeader.innerText = `Today's revenue is $${totalBookedToday} and we are ${Math.round(percentRoomsBooked * 100)}% full.`;
   } else {
-    let totalSpent = convertSpent(user.totalSpent);
-    let totalRewards = user.totalRewards;
+    const totalSpent = convertSpent(user.totalSpent);
+    const totalRewards = user.totalRewards;
     subHeader.innerText = `You have spent $${totalSpent} and accrued ${totalRewards} reward points.`;
   }
 }
@@ -319,7 +319,7 @@ function successfulLogin() {
 }
 
 function setFormDate() {
-  let today = new Date(Date.now()).toISOString().split("T")[0];
+  const today = new Date(Date.now()).toISOString().split("T")[0];
   reservationDate.setAttribute("min", today);
 }
 
