@@ -601,7 +601,7 @@ class BookingRepository {
   }
 
   getAvailableRooms(date) {
-    let unavailableRooms = this.bookings.reduce((acc, booking) => {
+    const unavailableRooms = this.bookings.reduce((acc, booking) => {
       if (booking.date === date) {
         acc.push(booking.roomNumber);
       }
@@ -743,7 +743,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _classes_Booking__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(12);
 /* harmony import */ var _api_calls__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(13);
 /* harmony import */ var _classes_BookingRepository__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(14);
-// IMPORTS 📥 -----------------------------------------------
+// IMPORTS -----------------------------------------------
 
 
 
@@ -755,7 +755,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// DOM VARIABLES - ELEMENTS 🖥️ 🌱 -----------------------------------------------
+// DOM VARIABLES - ELEMENTS  -----------------------------------------------
 const instructionsPage = document.getElementById("userInstructionsPage");
 const errorPage = document.getElementById("errorPage");
 const loginPage = document.getElementById("loginPage");
@@ -783,7 +783,7 @@ const reservationDate = document.getElementById("reservationDate");
 const filterForm = document.getElementById("filterForm");
 const filter = document.getElementById("filters");
 
-// GLOBAL VARIABLES 🌍 -----------------------------------------------
+// GLOBAL VARIABLES  -----------------------------------------------
 let currentUser, bookingRepo;
 const roomDescriptions = {
   "residential suite": ["Very posh suite with fancy stuff.", "./images/residential-suite.png"],
@@ -792,7 +792,7 @@ const roomDescriptions = {
   "single room": ["You're broke and single too, huh?", "./images/single.png"]
 };
 
-// EVENT LISTENERS 👂 -----------------------------------------------
+// EVENT LISTENERS  -----------------------------------------------
 window.addEventListener("load", () => {
   _api_calls__WEBPACK_IMPORTED_MODULE_8__.default.getAllData()
     .then(data => {
@@ -803,15 +803,15 @@ window.addEventListener("load", () => {
 loginForm.addEventListener("submit", e => {
   e.preventDefault();
 
-  let userNameAttempt = userName.value;
-  let passwordAttempt = password.value;
-  let userNameString = userNameAttempt.split(/[0-9]/)[0];
-  let userNumber = parseInt(userNameAttempt.match(/\d+/g));
-  let isUser = (userNameString === 'customer' || userNameString === 'manager');
-  let isValidPassword = passwordAttempt === 'overlook2021';
-  let isManager = userName.value === 'manager';
-  let isValidUserNumber = isManager ? true : (userNumber >= 1 && userNumber <= 50);
-  let isValidUser = (userNameAttempt && isUser && isValidPassword && isValidUserNumber);
+  const userNameAttempt = userName.value;
+  const passwordAttempt = password.value;
+  const userNameString = userNameAttempt.split(/[0-9]/)[0];
+  const userNumber = parseInt(userNameAttempt.match(/\d+/g));
+  const isUser = (userNameString === 'customer' || userNameString === 'manager');
+  const isValidPassword = passwordAttempt === 'overlook2021';
+  const isManager = userName.value === 'manager';
+  const isValidUserNumber = isManager ? true : (userNumber >= 1 && userNumber <= 50);
+  const isValidUser = (userNameAttempt && isUser && isValidPassword && isValidUserNumber);
 
   if (!isValidPassword) {
     unsuccessfulLogin("password");
@@ -840,7 +840,7 @@ loginForm.addEventListener("submit", e => {
 searchButton.addEventListener("click", e => {
   e.preventDefault();
   if (reservationDate.value) {
-    let availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
+    const availableRooms = bookingRepo.getAvailableRooms(convertDateDashes(reservationDate.value));
     generateAvailableRooms(availableRooms);
     show(filterForm);
   } else {
@@ -874,7 +874,7 @@ modalSection.addEventListener("click", e => {
 userSearchForm.addEventListener("submit", e => {
   e.preventDefault();
   currentUser = bookingRepo.getUserInfo(userSearchValue.value);
-  let userBookings = currentUser.getBookings(bookingRepo.bookings);
+  const userBookings = currentUser.getBookings(bookingRepo.bookings);
   generateReservations(userBookings);
   currentUser.calculateTotalSpent(bookingRepo.rooms);
   updateUserSpentHeader(currentUser);
@@ -883,8 +883,8 @@ userSearchForm.addEventListener("submit", e => {
 
 upcomingMinis.addEventListener("click", e => {
   if (e.target.id !== "upcomingMinis" && e.target.id !== "deleteReservation") {
-    let currentMiniCard = e.target.parentNode;
-    let deleteButton = currentMiniCard.children[2]
+    const currentMiniCard = e.target.parentNode;
+    const deleteButton = currentMiniCard.children[2]
     hide(currentMiniCard.children[0]);
     hide(currentMiniCard.children[1]);
     show(currentMiniCard.children[2]);
@@ -894,9 +894,9 @@ upcomingMinis.addEventListener("click", e => {
   }
 });
 
-// FUNCTIONS ⚙️ -----------------------------------------------
+// FUNCTIONS  -----------------------------------------------
 function bookRoom(room, user) {
-  let date = convertDateDashes(reservationDate.value);
+  const date = convertDateDashes(reservationDate.value);
   _api_calls__WEBPACK_IMPORTED_MODULE_8__.default.apiRequest("POST", "bookings", user.id, date, room.number)
     .then(() => {
       _api_calls__WEBPACK_IMPORTED_MODULE_8__.default.apiRequest("GET", "bookings")
@@ -935,9 +935,9 @@ function deleteBooking(id) {
 }
 
 function generateModal(roomList, roomNumber) {
-  let room = roomList.find(room => room.number === parseInt(roomNumber));
-  let multiplier = room.bedSize === "twin" ? 1 : 2;
-  let bidet = room.bidet ? "Bidet" : "";
+  const room = roomList.find(room => room.number === parseInt(roomNumber));
+  const multiplier = room.bedSize === "twin" ? 1 : 2;
+  const bidet = room.bidet ? "Bidet" : "";
   modalSection.innerHTML = "";
   modalSection.innerHTML = `
     <section class="modal" id="modal">
@@ -965,7 +965,7 @@ function generateModal(roomList, roomNumber) {
     </div>
     `;
   }
-  let bookButton = document.getElementById("bookButton");
+  const bookButton = document.getElementById("bookButton");
   setTimeout(() => bookButton.focus());
   bookButton.addEventListener("click", () => {
     bookRoom(room, currentUser);
@@ -973,7 +973,7 @@ function generateModal(roomList, roomNumber) {
 }
 
 function triggerModal(e) {
-  let roomNumber = e.target.parentNode.parentNode.id;
+  const roomNumber = e.target.parentNode.parentNode.id;
   generateModal(bookingRepo.availableRooms, roomNumber);
   show(modalSection);
 }
@@ -982,7 +982,7 @@ function generateAvailableRooms(rooms) {
   miniRoomCards.innerHTML = "";
   if (rooms.length) {
     rooms.forEach(room => {
-      let bed = room.numBeds > 1 ? "beds" : "bed";
+      const bed = room.numBeds > 1 ? "beds" : "bed";
       miniRoomCards.innerHTML += `
       <div class="mini-room" id="${room.number}">
         <div class="mini-room-left">
@@ -1001,11 +1001,11 @@ function generateAvailableRooms(rooms) {
 }
 
 function generateReservations(bookings) {
-  let today = Date.now() - 86400000;
-  let futureReservations = bookings.filter(booking => {
+  const today = Date.now() - 86400000;
+  const futureReservations = bookings.filter(booking => {
     return Date.parse(booking.date) > today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
-  let pastReservations = bookings.filter(booking => {
+  const pastReservations = bookings.filter(booking => {
     return Date.parse(booking.date) < today;
   }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
@@ -1031,7 +1031,7 @@ function generateReservations(bookings) {
 }
 
 function filterAvailableRooms(type, rooms) {
-  let filteredRooms = rooms.filter(room => room.roomType === type.toLowerCase());
+  const filteredRooms = rooms.filter(room => room.roomType === type.toLowerCase());
   generateAvailableRooms(filteredRooms);
 }
 
@@ -1045,13 +1045,13 @@ function updateUserSpentHeader(user) {
 
 function updateSpentRewardsHeader(user) {
   if (user === "manager") {
-    let today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
-    let totalBookedToday = bookingRepo.getTotalBookedDollars(today);
-    let percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
+    const today = convertDateDashes(new Date(Date.now()).toISOString().split("T")[0]);
+    const totalBookedToday = bookingRepo.getTotalBookedDollars(today);
+    const percentRoomsBooked = ((1 - ((bookingRepo.getAvailableRooms(today).length) / bookingRepo.rooms.length)));
     subHeader.innerText = `Today's revenue is $${totalBookedToday} and we are ${Math.round(percentRoomsBooked * 100)}% full.`;
   } else {
-    let totalSpent = convertSpent(user.totalSpent);
-    let totalRewards = user.totalRewards;
+    const totalSpent = convertSpent(user.totalSpent);
+    const totalRewards = user.totalRewards;
     subHeader.innerText = `You have spent $${totalSpent} and accrued ${totalRewards} reward points.`;
   }
 }
@@ -1064,7 +1064,7 @@ function successfulLogin() {
 }
 
 function setFormDate() {
-  let today = new Date(Date.now()).toISOString().split("T")[0];
+  const today = new Date(Date.now()).toISOString().split("T")[0];
   reservationDate.setAttribute("min", today);
 }
 
