@@ -44,6 +44,7 @@ describe('User', () => {
   });
 
   it('Should have a list of booked days', () => {
+    expect(user.bookings).to.be.an.instanceOf(Array);
     expect(user.bookings).to.deep.equal([]);
   });
 
